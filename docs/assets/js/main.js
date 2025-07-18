@@ -27,7 +27,19 @@ const CargaModuloHTML = (() => {
                     return response.text();
                 })
                 .then(htmlString => {
-                    document.getElementById(idperm).innerHTML = htmlString;
+                    const container = document.getElementById(idperm);
+                    container.innerHTML = htmlString;
+                    // Aquí puedes saber que el módulo ya se cargó en el DOM
+                    // Por ejemplo, puedes disparar un evento personalizado:
+                    const event = new CustomEvent('moduloCargado', { detail: { modulo, idperm } });
+                    container.dispatchEvent(event);
+                    if (idperm === 'inicio') {
+                        const iamElement = document.getElementById('I_AM');
+                        if (iamElement) {
+                            iamElement.style.height = `${window.innerHeight}px`;
+                        }
+                    }
+
                 })
                 .catch(error => {
                     console.error('Error al cargar el módulo:', error);
