@@ -66,10 +66,10 @@ html {
 }
 
 .I_AM h1::after {
-
   content: '|';
   position: absolute;
   left: -30px;
+  right: 10px;
   animation: promot 1s steps(1) infinite;
   -webkit-animation: promot 1s steps(1) infinite;
 }
