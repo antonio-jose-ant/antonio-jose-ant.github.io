@@ -11,7 +11,7 @@ const CargaModuloHTML = (() => {
     }
     return {
         cargaModulo: (modulo, idperm = false) => {
-            if (!idDOMPermitidos.includes(idperm)) {
+            if (!idDOMPermitidos.includes(idperm) && idperm !== false) {
                 console.error(`El ID '${idperm}' no está permitido.`);
                 return;
             }
