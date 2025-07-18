@@ -22,12 +22,17 @@
   --icon-size: 1.5em;
   --font-fixed: 16px;
 }
-
-
 body,
 html {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
     background-color: var(--background);
+}
+h1, h2, h3, h4, h5, h6 {
+    color: var(--secondary);
+}
+.section{
+  width: 100%;
+  height: auto;
 }
