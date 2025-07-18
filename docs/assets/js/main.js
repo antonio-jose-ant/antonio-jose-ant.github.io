@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    CargaModuloHTML.cargaModulo('docs/assets/html/home.html');
+    CargaModuloHTML.cargaModulo('./pages/header.html');
 });
 const CargaModuloHTML = (() => {
     return {
