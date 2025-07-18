@@ -29,10 +29,38 @@ html {
     font-family: Arial, sans-serif;
     background-color: var(--background);
 }
-h1, h2, h3, h4, h5, h6 {
-    color: var(--secondary);
-}
 .section{
   width: 100%;
   height: auto;
+}
+.I_AM {
+    text-align: center;
+    padding: 20px;
+    color: var(--secondary);
+    font-size: var(--font-xxl);
+    font-weight: bold;
+    position: relative;
+}
+.I_AM h1 {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+}
+.I_AM::after {
+  content: '<';
+  position: absolute;
+  left: -5;
+  top: 50%;
+}
+.I_AM::before {
+  content: '>';
+  position: absolute;
+  right: -5;
+  top: 50%;
 }
