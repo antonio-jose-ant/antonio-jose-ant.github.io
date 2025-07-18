@@ -207,6 +207,17 @@ a {
   padding: 6px;
   box-sizing: border-box;
 }
+.consola div.consola_content > textarea{
+  width: 100%;
+  height: 100%;
+  background-color: var(--tertiary);
+  color: var(--white);
+  font-family: monospace;
+  font-size: var(--font-fixed);
+  border: none;
+  outline: none;
+  resize: none;
+}
 
 @keyframes blink {
 
