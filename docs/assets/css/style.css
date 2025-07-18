@@ -11,63 +11,85 @@
   --background: #1b1b1b;
 
   /* 🔠 Tipografía (basado en rem para escalabilidad) */
-  --font-xs: 0.75rem;   /* 12px */
-  --font-sm: 0.875rem;  /* 14px */
-  --font-md: 1rem;      /* 16px (base) */
-  --font-lg: 1.25rem;   /* 20px */
-  --font-xl: 1.5rem;    /* 24px */
-  --font-xxl: 2rem;     /* 32px */
+  --font-xs: 0.75rem;
+  /* 12px */
+  --font-sm: 0.875rem;
+  /* 14px */
+  --font-md: 1rem;
+  /* 16px (base) */
+  --font-lg: 1.25rem;
+  /* 20px */
+  --font-xl: 1.5rem;
+  /* 24px */
+  --font-xxl: 2rem;
+  /* 32px */
 
   /* 🔣 Otros */
   --icon-size: 1.5em;
   --font-fixed: 16px;
 }
+
 body,
 html {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background-color: var(--background);
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: var(--background);
 }
-.section{
+
+.section {
   width: 100%;
   height: auto;
 }
+
 .I_AM {
-    text-align: center;
-    padding: 20px;
-    box-sizing: border-box;
-    color: var(--primary);
-    font-size: var(--font-xxl);
-    font-weight: bold;
-    position: relative;
+  text-align: center;
+  padding: 20px;
+  box-sizing: border-box;
+  color: var(--primary);
+  font-size: var(--font-xxl);
+  font-weight: bold;
+  position: relative;
 }
+
 .I_AM h1 {
-    margin: 0;
-    position: relative;
-    top: 50%;
-    left: 50%;
-    width: fit-content;
-    transform: translate(-50%, -50%);
-    -webkit-transform: translate(-50%, -50%);
-    -moz-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    -o-transform: translate(-50%, -50%);
+  margin: 0;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  width: fit-content;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
 }
+
 .I_AM h1::after {
-  content: 'root@Antonio_Segura:~# ';
-  position: absolute;
-  right:-30px;
-}
-.I_AM h1::before {
+
   content: '|';
   position: absolute;
   left: -30px;
   animation: promot 1s steps(1) infinite;
   -webkit-animation: promot 1s steps(1) infinite;
 }
+
+.I_AM h1::before {
+  content: 'root@Antonio_Segura:~# ';
+  position: absolute;
+  right: 10px;
+}
+
 @keyframes promot {
-  0% { opacity: 1; }
-  50% { opacity: 0; }
-  100% { opacity: 1; }
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
