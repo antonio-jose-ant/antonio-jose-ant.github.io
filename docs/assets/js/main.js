@@ -33,8 +33,10 @@ const CargaModuloHTML = (() => {
                     // Por ejemplo, puedes disparar un evento personalizado:
                     const event = new CustomEvent('moduloCargado', { detail: { modulo, idperm } });
                     container.dispatchEvent(event);
+
                     if (modulo === 'inicio') {
                         const iamElement = document.getElementById('I_AM');
+                        console.log('Módulo de inicio cargado');
                         if (iamElement) {
                             iamElement.style.height = `${window.innerHeight}px`;
                         }
