@@ -28,9 +28,6 @@ const CargaModuloHTML = (() => {
                 })
                 .then(htmlString => {
                     document.getElementById(idperm).innerHTML = htmlString;
-                    if(modulo==="inicio"){
-                        document.getElementById('I_AM').style.height = window.innerHeight + 'px';
-                    }
                 })
                 .catch(error => {
                     console.error('Error al cargar el módulo:', error);
