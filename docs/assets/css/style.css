@@ -37,7 +37,7 @@ html {
     text-align: center;
     padding: 20px;
     box-sizing: border-box;
-    color: var(--secondary);
+    color: var(--quinary);
     font-size: var(--font-xxl);
     font-weight: bold;
     position: relative;
@@ -47,6 +47,7 @@ html {
     position: relative;
     top: 50%;
     left: 50%;
+    width: fit-content;
     transform: translate(-50%, -50%);
     -webkit-transform: translate(-50%, -50%);
     -moz-transform: translate(-50%, -50%);
@@ -56,10 +57,10 @@ html {
 .I_AM h1::after {
   content: '>';
   position: absolute;
-  right:0;
+  right:-5px;
 }
 .I_AM h1::before {
   content: '<';
   position: absolute;
-  left: 0;
+  left: -5px;
 }
