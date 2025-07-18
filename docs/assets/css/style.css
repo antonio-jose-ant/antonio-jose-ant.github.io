@@ -68,16 +68,15 @@ html {
 .I_AM h1::after {
   content: '|';
   position: absolute;
-  left: -30px;
-  right: 10px;
   animation: promot 1s steps(1) infinite;
   -webkit-animation: promot 1s steps(1) infinite;
+  right: 10px;
 }
 
 .I_AM h1::before {
   content: 'root@Antonio_Segura:~# ';
   position: absolute;
-  right: 10px;
+  left: -30px;
 }
 
 @keyframes promot {
