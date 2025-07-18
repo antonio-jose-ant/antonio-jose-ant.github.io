@@ -10,8 +10,8 @@ const CargaModuloHTML = (() => {
         'header': './pages/header.html'
     }
     return {
-        cargaModulo: (modulo, idperm = false) => {
-            if (!idDOMPermitidos.includes(idperm) && idperm !== false) {
+        cargaModulo: (modulo, idperm = 'section') => {
+            if (!idDOMPermitidos.includes(idperm)) {
                 console.error(`El ID '${idperm}' no está permitido.`);
                 return;
             }
@@ -27,7 +27,7 @@ const CargaModuloHTML = (() => {
                     return response.text();
                 })
                 .then(htmlString => {
-                    document.getElementById(idperm ? idperm : 'section').innerHTML = htmlString;
+                    document.getElementById(idperm).innerHTML = htmlString;
                     if(modulo==="inicio"){
                         document.getElementById('I_AM').style.height = window.innerHeight + 'px';
                     }
