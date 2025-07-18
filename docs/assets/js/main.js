@@ -38,7 +38,7 @@ const CargaModuloHTML = (() => {
                         const iamElement = document.getElementById('I_AM');
                         console.log('Módulo de inicio cargado');
                         if (iamElement) {
-                            iamElement.style.height = `${window.innerHeight}px`;
+                            iamElement.style.height = `${window.innerHeight/2}px`;
                         }
                     }
 

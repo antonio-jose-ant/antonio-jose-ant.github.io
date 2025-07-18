@@ -37,7 +37,7 @@ html {
     text-align: center;
     padding: 20px;
     box-sizing: border-box;
-    color: var(--quinary);
+    color: var(--primary);
     font-size: var(--font-xxl);
     font-weight: bold;
     position: relative;
@@ -55,12 +55,19 @@ html {
     -o-transform: translate(-50%, -50%);
 }
 .I_AM h1::after {
-  content: '>';
+  content: 'root@Antonio_Segura:~# ';
   position: absolute;
-  right:-5px;
+  right:-30px;
 }
 .I_AM h1::before {
-  content: '<';
+  content: '|';
   position: absolute;
-  left: -5px;
+  left: -30px;
+  animation: promot 1s steps(1) infinite;
+  -webkit-animation: promot 1s steps(1) infinite;
+}
+@keyframes promot {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
 }
