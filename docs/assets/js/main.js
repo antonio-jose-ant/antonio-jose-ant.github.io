@@ -65,7 +65,7 @@ function menuAcctivo(event) {
         clickedItem.classList.add('selected');
         const modulo = clickedItem.textContent.trim().toLowerCase();
         console.log('Módulo seleccionado:', modulo);
-        // CargaModuloHTML.cargaModulo(modulo);
+        CargaModuloHTML.cargaModulo(modulo);
     }
 
 }
