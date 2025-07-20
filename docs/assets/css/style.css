@@ -95,6 +95,7 @@ a {
   -moz-border-radius: 10px;
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
+  cursor: pointer;
 }
 
 .header nav.menu ul li a {
@@ -119,7 +120,6 @@ a {
   padding: var(--padd);
   box-sizing: border-box;
   height: 100%;
-
 }
 
 .I_AM>div.I_AM__text {
@@ -207,7 +207,7 @@ a {
   padding: 6px;
   box-sizing: border-box;
 }
-.consola div.consola_content > textarea{
+.consola div.consola_content > textarea.comandInsert{
   width: 100%;
   height: 100%;
   background-color: var(--tertiary);
@@ -218,6 +218,25 @@ a {
   outline: none;
   resize: none;
 }
+
+/***animaciones class***/
+.fadeInUp{
+  animation: fadeInUp 1s ease-in-out;
+  -webkit-animation: fadeInUp 1s ease-in-out;
+}
+
+/***animaciones***/
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+} 
 
 @keyframes blink {
 
@@ -238,5 +257,43 @@ a {
 
   to {
     width: 100%;
+  }
+}
+
+
+@media (max-width: 1200px) {
+
+  .I_AM>div.I_AM__text h1 {
+    font-size: var(--font-xxl);
+  }
+  .I_AM>div.I_AM__text::before {
+    font-size: var(--font-xxl);
+  }
+
+
+}
+@media (max-width: 900px) {
+  .I_AM {
+    flex-direction: column;
+  }
+  .I_AM>div {
+    width: 100%;
+  }
+
+  .I_AM>div.I_AM__text h1 {
+    font-size: var(--font-lg);
+  }
+    .I_AM>div.I_AM__text::before {
+    font-size: var(--font-lg);
+  }
+  .muestra_consola{
+    min-height: 500px;
+  }
+  .I_AM__text{
+    min-height: 100px;
+  }
+  .consola{
+    width: 100%;
+    height: 450px;
   }
 }

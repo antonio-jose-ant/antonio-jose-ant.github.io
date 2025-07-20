@@ -1,13 +1,18 @@
 document.addEventListener('DOMContentLoaded', function () {
     CargaModuloHTML.cargaModulo('inicio');
+    var header = document.getElementById('header');
+    header.addEventListener('click', menuAcctivo);
 });
 const CargaModuloHTML = (() => {
-    const idDOMPermitidos = ['inicio', 'section', 'footer'];
+    const idDOMPermitidos = ['inicio', 'section', 'footer', 'muestra_consola'];
     const rutasPermitidas = {
         'inicio': './pages/inicio.html',
-        'section': './pages/section.html',
-        'footer': './pages/footer.html',
-        'header': './pages/header.html'
+        'header': './pages/header.html',
+        'consola': './pages/consola.html',
+        'contacto': './pages/contacto.html',
+        'proyectos': './pages/proyectos.html',
+        'sobre_mi': './pages/sobre_mi.html',
+        'experiencia': './pages/experiencia.html',
     }
     return {
         cargaModulo: (modulo, idperm = 'section') => {
@@ -33,12 +38,13 @@ const CargaModuloHTML = (() => {
                     // Por ejemplo, puedes disparar un evento personalizado:
                     const event = new CustomEvent('moduloCargado', { detail: { modulo, idperm } });
                     container.dispatchEvent(event);
-
                     if (modulo === 'inicio') {
                         const iamElement = document.getElementById('I_AM');
-                        console.log('Módulo de inicio cargado');
                         if (iamElement) {
-                            iamElement.style.height = `${window.innerHeight -54}px`;
+                            if (window.innerWidth >= 900) {
+                                iamElement.style.height = `${window.innerHeight - 54}px`;
+                            }
+                            CargaModuloHTML.cargaModulo('consola', 'muestra_consola');
                         }
                     }
 
@@ -49,3 +55,17 @@ const CargaModuloHTML = (() => {
         }
     }
 })();
+function menuAcctivo(event) {
+    const menuItems = document.querySelectorAll('.menu ul li');
+    menuItems.forEach(item => {
+        item.classList.remove('selected');
+    });
+    const clickedItem = event.target.closest('li');
+    if (clickedItem) {
+        clickedItem.classList.add('selected');
+        const modulo = clickedItem.textContent.trim().toLowerCase();
+        console.log('Módulo seleccionado:', modulo);
+        // CargaModuloHTML.cargaModulo(modulo);
+    }
+
+}
