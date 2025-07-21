@@ -46,6 +46,13 @@ html {
   align-items: center;
 }
 
+.grid {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+}
+
 a {
   text-decoration: none;
   color: var(--primary);
@@ -171,6 +178,7 @@ a {
   top: -3px;
 }
 
+/* clases consola */
 .consola {
   width: 90%;
   height: 90%;
@@ -178,6 +186,7 @@ a {
   border: solid 1px var(--background);
   box-shadow: -3px 3px 12px 2px var(--black);
   background-color: var(--black);
+  overflow: auto;
 }
 
 .consola div.consola_title {
@@ -209,22 +218,33 @@ a {
   background-color: var(--tertiary);
   width: 100%;
   height: calc(100% - 50px);
-  padding: 6px;
+  padding: 8px;
   box-sizing: border-box;
   border: none;
   outline: none;
   resize: none;
-  align-items: flex-start;
-  justify-content: flex-start;
   color: var(--white);
   font-family: monospace;
-  flex-direction: row;
+  flex-direction: column;
+  white-space: pre-wrap;
+  word-break: break-all;
+  align-items: flex-start;
+  justify-content: flex-start;
 }
-.consola div.consola_content span {
+
+
+.consola div.consola_content * {
   color: var(--white);
   font-size: var(--font-fixed);
-  height: 100%;
-  width: auto;
+  font-family: monospace;
+  margin: 0;
+  padding: 0;
+  text-align: justify;
+}
+
+.consola div.consola_content p.prompt {
+  width: 100%;
+  min-height: 60px;
 }
 
 /***animaciones class***/
