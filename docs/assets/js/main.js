@@ -117,6 +117,7 @@ function cargaConsola(idCargaConsole = 'muestra_consola') {
     }, { once: true }); // Solo una vez por carga
 }
 function agregarEventosInput(inputArea) {
+
     if (inputArea._listenerAgregado) return;
 
     inputArea._listenerAgregado = true; // bandera
@@ -124,14 +125,13 @@ function agregarEventosInput(inputArea) {
     inputArea.addEventListener('keydown', function (event) {
         if (event.key === 'Enter') {
             event.preventDefault();
-
             const consolaContent = inputArea.querySelectorAll('p');
             const lastP = consolaContent[consolaContent.length - 1];
             const lastPId = lastP.id;
             const lastPText = lastP.textContent;
             if (lastPText) {
                 const cleanedText = lastPText.replace(/^root@Antonio_Segura:~#\s*/, '');
-                consoleWeb.lexico(cleanedText, lastPId);
+                consoleWeb.lexico(cleanedText, lastPId, event);
             }
         }
     });
@@ -154,10 +154,13 @@ const consoleWeb = (() => {
     }
     function insertaNuevoP(idP, token = "") {
         let retIDPromo = crearPrompt(idP);
-        const userPrompt = document.getElementById(retIDPromo);
         if (token !== "") {
             insertarMensajeError(retIDPromo, token);
         }
+        return;
+    }
+    function moveCursor(idP) {
+        const userPrompt = document.getElementById(idP);
         const range = document.createRange();
         const sel = window.getSelection();
         range.selectNodeContents(userPrompt);
@@ -165,18 +168,30 @@ const consoleWeb = (() => {
         sel.removeAllRanges();
         sel.addRange(range);
     }
-    function crearPrompt(idP) {
-        const elementoExistente = document.getElementById(idP);
-        if (!elementoExistente) return;
-        elementoExistente.classList.remove('prompt');
-        const [baseId, numStr] = idP.split("-");
-        const nuevoID = parseInt(numStr) + 1;
+    function crearPrompt(idP, event = "") {
+        let idInsertp = "";
+        var elementoExistente = "";
+        let lugar = "afterend";
+        if (event === "") {
+            elementoExistente = document.getElementById(idP);
+            if (!elementoExistente) return;
+            elementoExistente.classList.remove('prompt');
+            const [baseId, numStr] = idP.split("-");
+            const nuevoID = parseInt(numStr) + 1;
+            idInsertp = `${baseId}-${nuevoID}`;
+        } else {
+            console.log("entramos")
+            elementoExistente = event.target;
+            idInsertp = "comand-0";
+            lugar = "afterbegin";
+        }
         const nuevoP = document.createElement('p');
         nuevoP.className = "prompt";
-        nuevoP.id = `${baseId}-${nuevoID}`;
+        nuevoP.id = idInsertp;
         nuevoP.textContent = 'root@Antonio_Segura:~# ';
-        elementoExistente.insertAdjacentElement('afterend', nuevoP);
-        return `${baseId}-${nuevoID}`;
+        elementoExistente.insertAdjacentElement(lugar, nuevoP);
+        moveCursor(idInsertp);
+        return idInsertp;
     }
     function insertarMensajeError(idPrompCreado, token) {
         const userPrompt = document.getElementById(idPrompCreado);
@@ -184,7 +199,7 @@ const consoleWeb = (() => {
         spanError.textContent = `'${token}' no es un comando válido`;
         userPrompt.insertAdjacentElement('beforebegin', spanError);
     }
-    function lexico(text, idP) {
+    function lexico(text, idP, event) {
         const tokensrecibidos = text.trim().split(/\s+/);
         for (let i = 0; i < tokensrecibidos.length; i++) {
             if (!tokens.includes(tokensrecibidos[i])) {
@@ -195,6 +210,10 @@ const consoleWeb = (() => {
         //llama a Sintáctico con var token
         // insertaNuevoP para pruebas en consola
         insertaNuevoP(idP);
+    }
+    function limpiaPantalla(event) {
+        event.target.innerHTML = '';
+        crearPrompt("", event);
     }
     function Sintáctico() {
         //pendiente
