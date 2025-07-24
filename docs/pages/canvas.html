@@ -1,0 +1,60 @@
+<canvas id="logo" height="600px" width="600px">
+
+</canvas>
+<script>
+    /*
+    Grados	Radianes
+    0°	0
+    90°	π / 2 ≈ 1.57
+    180°	π ≈ 3.14
+    270°	3π / 2 ≈ 4.71
+    360°	2π ≈ 6.28
+    */
+    const logo = (() => {
+        const canvas = document.getElementById('logo');
+        const ctx = canvas.getContext('2d');
+        const x = canvas.width;
+        const y = canvas.height;
+        const quintaparte = x / 5;
+        const colors = ["#E95420", "#77216F"];
+        ctx.clearRect(0, 0, x, y); // limpia
+        // ctx.strokeRect(0, 0, x, y); // borde del canvas
+        ctx.beginPath();
+        ctx.fillStyle = "#2C001E"; // color de fondo del círculo
+        ctx.arc(x / 2, y / 2, y / 2, 0, Math.PI * 2); // círculo completo
+        ctx.fill();
+        ctx.stroke();
+
+
+        return {
+            crealogo: function (grados, color) {
+                const rad = grados * (Math.PI / 180);
+                const ancho = quintaparte * 2;
+                const alto = quintaparte * 2.35;
+                ctx.lineWidth = 2;
+                ctx.save();
+                ctx.translate(x / 2, y / 2);
+                ctx.rotate(rad);
+                ctx.beginPath();
+                ctx.strokeStyle = "#E95420";
+                ctx.strokeRect(-ancho / 2 + alto / 5, -(alto + quintaparte) / 2, alto, alto);
+                ctx.restore();
+
+            },
+            repeticiones: function () {
+                let grados = 0;
+                const colorSelector = (num) => num % 2 ? 1 : 0;
+                for (let i = 0; i < 8; i++) {
+                    setTimeout(() => {
+                        const color = colorSelector(i);
+                        this.crealogo(grados, color);
+                        grados += 45;
+                        console.log(360 / 8);
+                    }, i * 200); 
+                }
+
+            }
+        };
+    })();
+    logo.repeticiones()
+</script>
