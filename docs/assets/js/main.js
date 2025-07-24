@@ -3,6 +3,29 @@ document.addEventListener('DOMContentLoaded', function () {
     var header = document.getElementById('header');
     header.addEventListener('click', menuAcctivo);
 });
+/**
+ * CargaModuloHTML es un objeto singleton que administra la carga dinámica de fragmentos HTML
+ * dentro de elementos específicos del DOM. Su propósito es modularizar el contenido del sitio 
+ * y permitir una navegación más dinámica sin recargar toda la página.
+ *
+ * Utiliza `fetch` para obtener el contenido HTML y lo inyecta en un contenedor permitido,
+ * validando tanto el nombre del módulo como el destino en el DOM. También lanza un evento 
+ * personalizado `moduloCargado` tras completar la carga.
+ *
+ * @namespace CargaModuloHTML
+ *
+ * @property {string[]} idDOMPermitidos - Lista de IDs de elementos del DOM en los que se permite insertar contenido.
+ * @property {Object.<string, string>} rutasPermitidas - Objeto que relaciona nombres de módulos con rutas HTML.
+ *
+ * 
+ * @method cargaModulo - Carga un fragmento HTML en un contenedor específico del DOM.
+ * @param {string} modulo - Nombre del módulo a cargar (clave de `rutasPermitidas`).
+ * @param {string} [idperm='section'] - ID del contenedor DOM donde se insertará el HTML.
+ * @fires CustomEvent#moduloCargado - Evento disparado después de insertar el HTML con detalles del módulo e ID destino.
+ * 
+ * @requires cargaConsola
+ * 
+ */
 const CargaModuloHTML = (() => {
     const idDOMPermitidos = ['inicio', 'section', 'footer', 'muestra_consola'];
     const rutasPermitidas = {
@@ -15,6 +38,18 @@ const CargaModuloHTML = (() => {
         'experiencia': './pages/experiencia.html',
     }
     return {
+        /**
+         * Carga un archivo HTML asociado a un módulo y lo inserta dentro de un contenedor válido del DOM.
+         *
+         * @function cargaModulo
+         * @memberof CargaModuloHTML
+         * @param {string} modulo - Nombre del módulo a cargar (clave existente en `rutasPermitidas`).
+         * @param {string} [idperm='section'] - ID del contenedor DOM donde se inyectará el contenido (debe estar en `idDOMPermitidos`).
+         * @returns {void}
+         *
+         * @fires CustomEvent#moduloCargado
+         * @throws {Error} - Si ocurre un problema durante la carga con fetch.
+         */
         cargaModulo: (modulo, idperm = 'section') => {
             if (!idDOMPermitidos.includes(idperm)) {
                 console.error(`El ID '${idperm}' no está permitido.`);
@@ -41,8 +76,8 @@ const CargaModuloHTML = (() => {
                         if (iamElement) {
                             if (window.innerWidth >= 900) {
                                 iamElement.style.height = `${window.innerHeight - 54}px`;
-                                cargaConsola();
                             }
+                            cargaConsola();
                         }
                     }
 
@@ -53,6 +88,7 @@ const CargaModuloHTML = (() => {
         }
     }
 })();
+
 function menuAcctivo(event) {
     const menuItems = document.querySelectorAll('.menu ul li');
     menuItems.forEach(item => {
@@ -95,7 +131,7 @@ function agregarEventosInput(inputArea) {
             const lastPText = lastP.textContent;
             if (lastPText) {
                 const cleanedText = lastPText.replace(/^root@Antonio_Segura:~#\s*/, '');
-                consoleWeb.procesarComando(cleanedText, lastPId);
+                consoleWeb.lexico(cleanedText, lastPId);
             }
         }
     });
@@ -116,57 +152,59 @@ const consoleWeb = (() => {
         'proyectos': 'Muestra una lista de proyectos.',
         'experiencia': 'Muestra la experiencia laboral.',
     }
+    function insertaNuevoP(idP, token = "") {
+        let retIDPromo = crearPrompt(idP);
+        const userPrompt = document.getElementById(retIDPromo);
+        if (token !== "") {
+            insertarMensajeError(retIDPromo, token);
+        }
+        const range = document.createRange();
+        const sel = window.getSelection();
+        range.selectNodeContents(userPrompt);
+        range.collapse(false);
+        sel.removeAllRanges();
+        sel.addRange(range);
+    }
+    function crearPrompt(idP) {
+        const elementoExistente = document.getElementById(idP);
+        if (!elementoExistente) return;
+        elementoExistente.classList.remove('prompt');
+        const [baseId, numStr] = idP.split("-");
+        const nuevoID = parseInt(numStr) + 1;
+        const nuevoP = document.createElement('p');
+        nuevoP.className = "prompt";
+        nuevoP.id = `${baseId}-${nuevoID}`;
+        nuevoP.textContent = 'root@Antonio_Segura:~# ';
+        elementoExistente.insertAdjacentElement('afterend', nuevoP);
+        return `${baseId}-${nuevoID}`;
+    }
+    function insertarMensajeError(idPrompCreado, token) {
+        const userPrompt = document.getElementById(idPrompCreado);
+        const spanError = document.createElement('span');
+        spanError.textContent = `'${token}' no es un comando válido`;
+        userPrompt.insertAdjacentElement('beforebegin', spanError);
+    }
+    function lexico(text, idP) {
+        const tokensrecibidos = text.trim().split(/\s+/);
+        for (let i = 0; i < tokensrecibidos.length; i++) {
+            if (!tokens.includes(tokensrecibidos[i])) {
+                insertaNuevoP(idP, tokensrecibidos[i]);
+                return;
+            }
+        }
+        //llama a Sintáctico con var token
+        // insertaNuevoP para pruebas en consola
+        insertaNuevoP(idP);
+    }
+    function Sintáctico() {
+        //pendiente
+        //si el proseso es valido llama Semántico 
+    }
+    function Semántico() {
+        //pendiente
+        //si el proseso es valido llama insertaNuevoP sin mensaje de error
+    }
     return {
-        procesarComando: (text, idP = "comand-0") => {
-            const tokensrecibidos = text.trim().split(/\s+/);
-            consoleWeb.lexico(tokensrecibidos, idP);
-        },
-        insertaNuevoP: (idP, token = "") => {
-            const elementoExistente = document.getElementById(idP);
-            if (!elementoExistente) return;
-
-            elementoExistente.classList.remove('prompt');
-
-            const [baseId, numStr] = idP.split("-");
-            const nuevoID = parseInt(numStr) + 1;
-            const nuevoP = document.createElement('p');
-            nuevoP.className = "prompt";
-            nuevoP.id = `${baseId}-${nuevoID}`;
-            nuevoP.textContent = 'root@Antonio_Segura:~# ';
-            elementoExistente.insertAdjacentElement('afterend', nuevoP);
-            const userPrompt = document.getElementById(baseId + "-" + nuevoID);
-            if (token !== "") {
-                const spanError = document.createElement('span');
-                spanError.textContent = `${token} no es un comando válido`;
-                userPrompt.insertAdjacentElement('beforebegin', spanError);
-            }
-            const range = document.createRange();
-            const sel = window.getSelection();
-            range.selectNodeContents(userPrompt);
-            range.collapse(false); 
-            sel.removeAllRanges();
-            sel.addRange(range);
-
-        },
-
-        lexico: (token, idP) => {
-            for (let i = 0; i < token.length; i++) {
-                if (!tokens.includes(token[i])) {
-                    consoleWeb.insertaNuevoP(idP, token[i]);
-                    return;
-                }
-            }
-            //llama a Sintáctico con var token
-            // insertaNuevoP para pruebas en consola
-            consoleWeb.insertaNuevoP(idP);
-        },
-        Sintáctico: () => {
-            //pendiente
-            //si el proseso es valido llama Semántico 
-        },
-        Semántico: () => {
-            //pendiente
-            //si el proseso es valido llama insertaNuevoP sin mensaje de error
-        },
+        lexico
     }
 })();
