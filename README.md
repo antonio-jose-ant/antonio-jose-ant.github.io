@@ -20,6 +20,8 @@ cd proyectos: Muestra una lista de mis proyectos.
 
 cd experiencia: Muestra mi experiencia laboral.
 
+cd tecnologias: Muestra las tecnologías que uso en mi día a día.
+
 cls / clear: Limpia la pantalla de la consola.
 
 dir: Lista las opciones del menú (excluyendo "Inicio") y un apartado de "Tecnologías".
