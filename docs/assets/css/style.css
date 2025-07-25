@@ -63,12 +63,14 @@ a {
   height: auto;
 }
 
+/******menu***/
 .header {
   width: 100%;
   height: 54px;
   background-color: var(--black);
   padding: 10px 10px 0 10px;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .header nav.menu {
@@ -80,7 +82,7 @@ a {
   box-sizing: border-box;
 }
 
-.header nav.menu ul {
+.header nav.menu ul.menu-Principal {
   width: auto;
   height: 100%;
   justify-content: flex-start;
@@ -103,6 +105,7 @@ a {
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
   cursor: pointer;
+  grid-template: 100% / auto 1fr;
 }
 
 .header nav.menu ul li a {
@@ -110,11 +113,13 @@ a {
 
 }
 
-.header nav.menu ul li.selected {
+.header nav.menu ul.menu-Principal li.selected {
   background-color: var(--background);
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
+
+/******menu fin***/
 
 .I_AM {
   justify-content: center;
@@ -249,8 +254,18 @@ a {
 
 /***animaciones class***/
 .fadeInUp {
-  animation: fadeInUp 1s ease-in-out;
-  -webkit-animation: fadeInUp 1s ease-in-out;
+  animation: fadeInUp .8s ease-in-out;
+  -webkit-animation: fadeInUp .8s ease-in-out;
+}
+
+.fadeInUp-Menu {
+  animation: fadeInUp-Menu .8s ease-in-out;
+  -webkit-animation: fadeInUp-Menu .8s ease-in-out;
+}
+
+.fadeInDown {
+  animation: fadeInDown .8s ease-in-out;
+  -webkit-animation: fadeInDown .8s ease-in-out;
 }
 
 /***animaciones***/
@@ -259,11 +274,59 @@ a {
   from {
     opacity: 0;
     transform: translateY(20px);
+    -webkit-transform: translateY(20px);
+    -moz-transform: translateY(20px);
+    -ms-transform: translateY(20px);
+    -o-transform: translateY(20px);
   }
 
   to {
     opacity: 1;
     transform: translateY(0);
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -o-transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp-Menu {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -o-transform: translateY(0);
+}
+
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+    -webkit-transform: translateY(-20px);
+    -moz-transform: translateY(-20px);
+    -ms-transform: translateY(-20px);
+    -o-transform: translateY(-20px);
+}
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+    -webkit-transform: translateY(-20px);
+    -moz-transform: translateY(-20px);
+    -ms-transform: translateY(-20px);
+    -o-transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -o-transform: translateY(0);
   }
 }
 
@@ -325,11 +388,72 @@ a {
   }
 
   .I_AM__text {
-    min-height: 100px;
+    min-height: 250px;
   }
 
   .consola {
     width: 100%;
     height: 450px;
   }
+
+  .header nav.menu ul.menu-Principal {
+    flex-direction: column;
+    height: 50px;
+    position: relative;
+  }
+
+  .header nav.menu ul.menu-Principal::after {
+    content: '+';
+    background-color: var(--background);
+    height: 40px;
+    width: 40px;
+    position: absolute;
+    top: 0;
+    right: -45px;
+    border-radius: 50%;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-xxl);
+    text-align: center;
+  }
+
+  .header nav.menu ul li {
+    grid-template-rows: 50px;
+    min-width: 125px;
+  }
+
+  .header nav.menu ul.menu-Principal li.selected {
+    position: absolute;
+    top: 0;
+  }
+
+  ul.menu-flotante {
+    position: absolute;
+    z-index: 2;
+    background-color: var(--black);
+    padding: 0;
+    margin: 20px 10px;
+    list-style: none;
+    top: 33px;
+    left: 30%;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+  }
+
+  ul.menu-flotante>li {
+    color: var(--white);
+    grid-template-rows: 50px;
+    border-bottom: solid 1px var(--gray);
+    border-radius: 0 !important;
+    -webkit-border-radius: 0 !important;
+    -moz-border-radius: 0 !important;
+    -ms-border-radius: 0 !important;
+    -o-border-radius: 0 !important;
+  }
+
 }
