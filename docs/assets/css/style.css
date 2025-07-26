@@ -61,6 +61,7 @@ a {
 .section {
   width: 100%;
   height: auto;
+  overflow: auto;
 }
 
 /******menu***/
@@ -366,7 +367,7 @@ a {
 
 }
 
-@media (max-width: 900px) {
+@media (max-width: 980px) {
   .I_AM {
     flex-direction: column;
   }

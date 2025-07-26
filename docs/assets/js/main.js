@@ -35,6 +35,7 @@ const CargaModuloHTML = (() => {
         'consola': './pages/consola.html',
         'contacto': './pages/contacto.html',
         'proyectos': './pages/proyectos.html',
+        'habilidades': './pages/habilidades.html',
         'sobre_mi': './pages/sobre_mi.html',
         'experiencia': './pages/experiencia.html',
     }
@@ -221,11 +222,8 @@ function cargaConsola(idCargaConsole = 'muestra_consola') {
 }
 
 function agregarEventosInput(inputArea) {
-
     if (inputArea._listenerAgregado) return;
-
     inputArea._listenerAgregado = true; // bandera
-
     inputArea.addEventListener('keydown', function (event) {
         if (event.key === 'Enter') {
             event.preventDefault();
