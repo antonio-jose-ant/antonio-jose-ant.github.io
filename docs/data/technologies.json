@@ -1,0 +1,26 @@
+{
+  "tecnologías": {
+    "Programacion": ["PHP", "JavaScript"],
+    "Frameworks": ["Bootstrap", "jQuery", "Angular", "Laravel"],
+    "Base de datos": {
+      "relacional": ["MariaDB", "MySQL"]
+    },
+    "SO": {
+      "Linux": {
+        "distribuciones": ["Ubuntu Server LTS", "Debian", "Ubuntu Desktop"],
+        "dependencias_instaladas": {
+          "servidores_web": ["Apache", "Nginx"],
+          "bases_de_datos": ["MariaDB"],
+          "lenguajes": ["PHP", "Node.js"],
+          "gestores_paquetes": ["Composer", "npm"]
+        }
+      }
+    },
+    "Control de versiones": ["Git", "GitHub"],
+    "Herramientas de construcción": ["Vite"],
+    "Preprocesadores CSS": ["Sass"],
+    "Testing": [" ", " "],
+    "APIs": ["AJAX", "Fetch API"],
+    "Diseño UI/UX": ["Figma"]
+  }
+}
