@@ -1,4 +1,5 @@
 # antonio-jose-ant.github.io
+
 ¡Bienvenido a mi Portafolio!
 ¡Hola! Soy un desarrollador web full-stack apasionado por crear experiencias digitales interactivas y funcionales. Este portafolio es una muestra de mis habilidades y proyectos, diseñado para ofrecerte una navegación única y dinámica.
 
@@ -12,15 +13,16 @@ Aquí te presento los comandos básicos que puedes utilizar en la consola:
 
 ls: Lista las opciones del menú (excluyendo "Inicio") y un apartado de "Tecnologías".
 
-cd <sección>: Cambia a la sección especificada y muestra su contenido dentro de la consola. Puedes usarlo con las siguientes secciones:
+cd : Cambia a la sección especificada y muestra su contenido dentro de la consola. Puedes usarlo con las siguientes secciones:
 
-cd contacto: Muestra mi información de contacto.
-
-cd proyectos: Muestra una lista de mis proyectos.
-
-cd experiencia: Muestra mi experiencia laboral.
-
-cd tecnologias: Muestra las tecnologías que uso en mi día a día.
+ -cd contacto: Muestra mi información de contacto.
+ -cd sobre mí: 
+ -cd proyectos: Muestra una lista de mis proyectos.
+ -cd habilidades: Muestra mis habilidades laborales.
+ -cd  experiencia: Muestra mi experiencia laboral.
+ -cd tecnologias: Muestra las tecnologías que uso en mi día a día.
+ -cls: clear: Limpia la pantalla de la consola.
+ -clear: Limpia la pantalla de la consola
 
 cls / clear: Limpia la pantalla de la consola.
 

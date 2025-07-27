@@ -1,0 +1,18 @@
+{
+  "function": {
+    "ls": "Lista las opciones del menú (excluyendo 'Inicio') y un apartado de 'Tecnologías'.",
+    "cd": {
+      "Cambia a la sección especificada y muestra su contenido dentro de la consola. Puedes usarlo con las siguientes secciones: ": [
+        "cd contacto: Muestra mi información de contacto.",
+        "cd sobre mí: ",
+        "cd proyectos: Muestra una lista de mis proyectos.",
+        "cd habilidades: Muestra mis habilidades laborales.",
+        "cd  experiencia: Muestra mi experiencia laboral.",
+        "cd tecnologias: Muestra las tecnologías que uso en mi día a día.",
+        "cls: clear: Limpia la pantalla de la consola.",
+        "clear: Limpia la pantalla de la consola."
+      ]
+    },
+    "dir": "Lista las opciones del menú (excluyendo 'Inicio') y un apartado de 'Tecnologías'."
+  }
+}

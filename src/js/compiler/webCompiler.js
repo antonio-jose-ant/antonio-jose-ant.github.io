@@ -1,4 +1,10 @@
 export function agregarEventosInput(inputArea) {
+    const reponseCompiler = {
+        "-1": (idPAnterior, token) => consoleWeb.insertaNuevoP(idPAnterior, token),
+        "1": (idPAnterior, token) => consoleWeb.insertaNuevoP(idPAnterior, token),
+        "3": (idPAnterior, token) => consoleWeb.insertaNuevoP(idPAnterior, token),
+        "4": (idPAnterior, token) => consoleWeb.insertaNuevoP(idPAnterior, token),
+    };
     if (inputArea._listenerAgregado) return;
     inputArea._listenerAgregado = true; // bandera
     inputArea.addEventListener('keydown', function (event) {
@@ -10,29 +16,97 @@ export function agregarEventosInput(inputArea) {
             const lastPText = lastP.textContent;
             if (lastPText) {
                 const cleanedText = lastPText.replace(/^root@Antonio_Segura:~#\s*/, '');
-                consoleWeb.lexico(cleanedText, lastPId, event);
+                if (cleanedText != "") {
+                    var reponse = consoleWeb.lexico(cleanedText);
+                    if (reponse.result === 2) { consoleWeb.limpiaPantalla(event); return; }
+                    reponseCompiler[reponse.result](lastPId, reponse.token);
+                } else {
+                    reponseCompiler["-1"](lastPId);
+                }
             }
         }
     });
 }
 const consoleWeb = (() => {
     const tokens = [
-        'ls', 'cd', 'cls', 'clear', 'dir', 'contacto', 'proyectos', 'experiencia', '--help',
-    ]
-    const tokensignificado = {
-        'ls': 'Lista los archivos y directorios en el directorio actual.',
-        'cd': 'Cambia el directorio actual a otro especificado.',
-        'cls': 'Limpia la pantalla de la consola.',
-        'clear': 'Limpia la pantalla de la consola.',
-        'dir': 'Muestra una lista de archivos y directorios en el directorio actual.',
-        'contacto': 'Muestra información de contacto.',
-        'proyectos': 'Muestra una lista de proyectos.',
-        'experiencia': 'Muestra la experiencia laboral.',
+        'ls',
+        'cd',
+        'cls',
+        'clear',
+        'dir',
+        'contacto',
+        'proyectos',
+        'experiencia',
+        'habilidades',
+        'sobre_mi',
+        '--help',
+    ];
+    const directorios = [
+        'contacto',
+        'proyectos',
+        'experiencia',
+        'habilidades',
+        'sobre_mi'
+    ];
+    const sintaxis = {
+        'cd': [...directorios, '..'],
+        1: ['ls', 'cd', 'cls', 'clear', 'dir', '--help'],
+        'dir':'--help',
+        'clear':'--help',
+        'cls':'--help',
+        'ls':'--help',
+    };
+    function lexico(text) {
+        const tokensrecibidos = text.trim().split(/\s+/);
+        const tokensLimpios = [];
+        for (let i = 0; i < tokensrecibidos.length; i++) {
+            const tokenLimpio = tokensrecibidos[i].replace(/^\.(\/|\\)/, '');
+            tokensLimpios.push(tokenLimpio);
+            if (!tokens.includes(tokenLimpio)) {
+                return { "result": "-1", "token": `'${tokensrecibidos[i]}' no es un comando válido` };
+            }
+        }
+        return Sintáctico(tokensLimpios, tokensLimpios.length);
+    }
+    function Sintáctico(text, numberTokens) {
+        if (numberTokens === 1) {
+            if (sintaxis[numberTokens].includes(text[0])) return Semantico(text, numberTokens);
+        } else if (numberTokens === 2) {
+            if (sintaxis.hasOwnProperty(text[0])) {
+                if (sintaxis[text[0]].includes(text[1])) return Semantico(text, numberTokens);
+            }
+        } else {
+            return { "result": "-1", "token": "Error de sintaxis" };
+        }
+    }
+    function Semantico(tokens, numberTokens) {
+        if (numberTokens === 1 && tokens[0] === "--help") {return help();}
+        if(numberTokens==2 && tokens[1]=="--help"){return help(tokens[0])}
+        if(numberTokens==1 && tokens[0]=="cls" || tokens[0]=="clear"){return {"result": 2, "token": ""}}
+        
+        const comando = {
+            "ls": (dir = "todos") => listar(dir),
+            "cd": (directorio) => cdFuncionamiento(directorio),
+            "dir": (dir = "todos") => listar(dir),
+        }
+        const resultSemantico = comando[tokens[0]](numberTokens > 1 ? tokens[1] : "");
+        return { "result": resultSemantico.number, "token": resultSemantico.text };
+
+    }
+    function listar(dir) {
+        return { "number": 1, "text": "" }
+    }
+    function help(coman=""){
+        return { "number": 3, "text": "" }
+    }
+    function cdFuncionamiento(directorio) {
+        crearPrompt(idP)
+        return { "number": 4, "text": "" }
     }
     function insertaNuevoP(idP, token = "") {
         let retIDPromo = crearPrompt(idP);
         if (token !== "") {
-            insertarMensajeError(retIDPromo, token);
+            mostrarSalida(retIDPromo, token);
         }
         return;
     }
@@ -45,7 +119,7 @@ const consoleWeb = (() => {
         sel.removeAllRanges();
         sel.addRange(range);
     }
-    function crearPrompt(idP, event = "") {
+    function crearPrompt(idP, event = "", cd = "# ") {
         let idInsertp = "";
         var elementoExistente = "";
         let lugar = "afterend";
@@ -64,43 +138,23 @@ const consoleWeb = (() => {
         const nuevoP = document.createElement('p');
         nuevoP.className = "prompt";
         nuevoP.id = idInsertp;
-        nuevoP.textContent = 'root@Antonio_Segura:~# ';
+        nuevoP.textContent = 'root@Antonio_Segura:~' + cd;
         elementoExistente.insertAdjacentElement(lugar, nuevoP);
         moveCursor(idInsertp);
         return idInsertp;
     }
-    function insertarMensajeError(idPrompCreado, token) {
+    function mostrarSalida(idPrompCreado, token) {
         const userPrompt = document.getElementById(idPrompCreado);
         const spanError = document.createElement('span');
-        spanError.textContent = `'${token}' no es un comando válido`;
+        spanError.textContent = token;
         userPrompt.insertAdjacentElement('beforebegin', spanError);
-    }
-    function lexico(text, idP, event) {
-        const tokensrecibidos = text.trim().split(/\s+/);
-        for (let i = 0; i < tokensrecibidos.length; i++) {
-            if (!tokens.includes(tokensrecibidos[i])) {
-                insertaNuevoP(idP, tokensrecibidos[i]);
-                return;
-            }
-        }
-        //llama a Sintáctico con var token
-        // insertaNuevoP para pruebas en consola
-        insertaNuevoP(idP);
     }
     function limpiaPantalla(event) {
         event.target.innerHTML = '';
         crearPrompt("", event);
     }
-    function Sintáctico() {
-        //pendiente
-        //si el proseso es valido llama Semántico 
-    }
-    function Semántico() {
-        //pendiente
-        //si el proseso es valido llama insertaNuevoP sin mensaje de error
-    }
     return {
-        lexico
+        lexico, insertaNuevoP, limpiaPantalla
     }
 })();
 window.agregarEventosInput = agregarEventosInput;
