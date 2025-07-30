@@ -1,3 +1,4 @@
+import { creaConst } from '../obtenerDataJson/obtenerDataJson.js';
 /**
  * CargaModuloHTML es un objeto singleton que administra la carga dinámica de fragmentos HTML
  * dentro de elementos específicos del DOM. Su propósito es modularizar el contenido del sitio 
@@ -22,17 +23,6 @@
  * 
  */
 export const CargaModuloHTML = (() => {
-    const idDOMPermitidos = ['inicio', 'section', 'footer', 'muestra_consola'];
-    const rutasPermitidas = {
-        'inicio': './pages/inicio.html',
-        'header': './pages/header.html',
-        'consola': './pages/consola.html',
-        'contacto': './pages/contacto.html',
-        'proyectos': './pages/proyectos.html',
-        'habilidades': './pages/habilidades.html',
-        'sobre_mi': './pages/sobre_mi.html',
-        'experiencia': './pages/experiencia.html',
-    }
     /**
  * Carga un archivo HTML asociado a un módulo y lo inserta dentro de un contenedor válido del DOM.
  *
@@ -45,16 +35,24 @@ export const CargaModuloHTML = (() => {
  * @fires CustomEvent#moduloCargado
  * @throws {Error} - Si ocurre un problema durante la carga con fetch.
  */
+
     function cargaModulo(modulo, idperm = 'section') {
-        if (!idDOMPermitidos.includes(idperm)) {
-            console.error(`El ID '${idperm}' no está permitido.`);
-            throw new Error(`El ID '${idperm}' no está permitido.`);
-        }
-        if (!rutasPermitidas[modulo]) {
-            console.error(`El módulo '${modulo}' no está permitido.`);
-            throw new Error(`El módulo '${modulo}' no está permitido.`);
-        }
-        fetch(rutasPermitidas[modulo])
+        creaConst.obtenerDataJson('allowed_pages')
+            .then(requerimientos => {
+                const idDOMPermitidos = requerimientos.idDOMPermitidos;
+                const rutasPermitidas = requerimientos.rutasPermitidas;
+
+                if (!idDOMPermitidos.includes(idperm)) {
+                    console.error(`El ID '${idperm}' no está permitido.`);
+                    throw new Error(`El ID '${idperm}' no está permitido.`);
+                }
+                if (!rutasPermitidas[modulo]) {
+                    console.error(`El módulo '${modulo}' no está permitido.`);
+                    throw new Error(`El módulo '${modulo}' no está permitido.`);
+                }
+
+                return fetch(rutasPermitidas[modulo]);
+            })
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`Error HTTP: ${response.status}`);

@@ -1,10 +1,5 @@
+import { creaConst } from '../obtenerDataJson/obtenerDataJson.js';
 export function agregarEventosInput(inputArea) {
-    const reponseCompiler = {
-        "-1": (idPAnterior, token) => consoleWeb.insertaNuevoP(idPAnterior, token),
-        "1": (idPAnterior, token) => consoleWeb.insertaNuevoP(idPAnterior, token),
-        "3": (idPAnterior, token) => consoleWeb.insertaNuevoP(idPAnterior, token),
-        "4": (idPAnterior, token) => consoleWeb.insertaNuevoP(idPAnterior, token),
-    };
     if (inputArea._listenerAgregado) return;
     inputArea._listenerAgregado = true; // bandera
     inputArea.addEventListener('keydown', function (event) {
@@ -13,50 +8,52 @@ export function agregarEventosInput(inputArea) {
             const consolaContent = inputArea.querySelectorAll('p');
             const lastP = consolaContent[consolaContent.length - 1];
             const lastPId = lastP.id;
-            const lastPText = lastP.textContent;
+            const lastPText = lastP.innerText.trim();
             if (lastPText) {
                 const cleanedText = lastPText.replace(/^root@Antonio_Segura:~#\s*/, '');
                 if (cleanedText != "") {
-                    var reponse = consoleWeb.lexico(cleanedText);
-                    if (reponse.result === 2) { consoleWeb.limpiaPantalla(event); return; }
-                    reponseCompiler[reponse.result](lastPId, reponse.token);
+                    consoleWeb.lexico(cleanedText)
+                        .then(reponse => {
+                            if (reponse.result === 2) { consoleWeb.limpiaPantalla(event); return; }
+                            consoleWeb.insertaNuevoP(lastPId, reponse.token)
+                        });
+
                 } else {
-                    reponseCompiler["-1"](lastPId);
+                    consoleWeb.insertaNuevoP(lastPId)
                 }
             }
         }
     });
 }
 const consoleWeb = (() => {
-    const tokens = [
-        'ls',
-        'cd',
-        'cls',
-        'clear',
-        'dir',
-        'contacto',
-        'proyectos',
-        'experiencia',
-        'habilidades',
-        'sobre_mi',
-        '--help',
-    ];
-    const directorios = [
-        'contacto',
-        'proyectos',
-        'experiencia',
-        'habilidades',
-        'sobre_mi'
-    ];
-    const sintaxis = {
-        'cd': [...directorios, '..'],
-        1: ['ls', 'cd', 'cls', 'clear', 'dir', '--help'],
-        'dir':'--help',
-        'clear':'--help',
-        'cls':'--help',
-        'ls':'--help',
-    };
-    function lexico(text) {
+    let tokens = [];
+    let directorios = [];
+    let sintaxis = {};
+    let datosCargados = false;
+    let cargando = false;
+    let esperando = [];
+    let significado = {}
+
+    async function cargarDatos() {
+        if (datosCargados) return;
+        if (cargando) {
+            // Si ya está cargando, espera a que termine
+            return new Promise(resolve => esperando.push(resolve));
+        }
+        cargando = true;
+        const recibido = await creaConst.obtenerDataJson('tokens');
+        tokens = recibido.tokens;
+        directorios = recibido.directorios;
+        sintaxis = recibido.sintaxis;
+        significado = recibido.significado;
+        datosCargados = true;
+        cargando = false;
+        esperando.forEach(res => res()); // resolver a los que estaban esperando
+        esperando = [];
+    }
+
+    async function lexico(text) {
+        await cargarDatos();  // solo espera si aún no están cargados
         const tokensrecibidos = text.trim().split(/\s+/);
         const tokensLimpios = [];
         for (let i = 0; i < tokensrecibidos.length; i++) {
@@ -70,37 +67,99 @@ const consoleWeb = (() => {
     }
     function Sintáctico(text, numberTokens) {
         if (numberTokens === 1) {
-            if (sintaxis[numberTokens].includes(text[0])) return Semantico(text, numberTokens);
-        } else if (numberTokens === 2) {
-            if (sintaxis.hasOwnProperty(text[0])) {
-                if (sintaxis[text[0]].includes(text[1])) return Semantico(text, numberTokens);
+            if (Array.isArray(sintaxis["1"]) && sintaxis["1"].includes(text[0])) {
+                return Semantico(text, numberTokens);
+            } else {
+                return { "result": "-1", "token": `Comando inválido: '${text[0]}'` };
             }
-        } else {
-            return { "result": "-1", "token": "Error de sintaxis" };
+        } else if (numberTokens === 2) {
+            if (!sintaxis.hasOwnProperty(text[0])) {
+                return { "result": "-1", "token": `Comando no reconocido: '${text[0]}'` };
+            }
+            const validArgs = sintaxis[text[0]];
+            if (!Array.isArray(validArgs)) {
+                return { "result": "-1", "token": `Configuración inválida para el comando: '${text[0]}'` };
+            }
+            if (!validArgs.includes(text[1])) {
+                return { "result": "-1", "token": `Argumento inválido para '${text[0]}': '${text[1]}'` };
+            }
+            return Semantico(text, numberTokens);
         }
+        return { "result": "-1", "token": "Error de sintaxis general" };
     }
+
     function Semantico(tokens, numberTokens) {
-        if (numberTokens === 1 && tokens[0] === "--help") {return help();}
-        if(numberTokens==2 && tokens[1]=="--help"){return help(tokens[0])}
-        if(numberTokens==1 && tokens[0]=="cls" || tokens[0]=="clear"){return {"result": 2, "token": ""}}
-        
-        const comando = {
-            "ls": (dir = "todos") => listar(dir),
-            "cd": (directorio) => cdFuncionamiento(directorio),
-            "dir": (dir = "todos") => listar(dir),
+        if (numberTokens === 1 && (tokens[0] === "--help" || tokens[0] === "/?")) {
+            const resultSemantico = help();
+            return { "result": resultSemantico.number, "token": resultSemantico.text };
         }
-        const resultSemantico = comando[tokens[0]](numberTokens > 1 ? tokens[1] : "");
+        if (numberTokens == 2 && (tokens[1] === "--help" || tokens[1] === "/?")) {
+            const resultSemantico = help(tokens[0])
+            return { "result": resultSemantico.number, "token": resultSemantico.text };
+        }
+        if (numberTokens == 1 && (tokens[0] == "cls" || tokens[0] == "clear")) {
+            return { "result": 2, "token": "" }
+        }
+        const comando = {
+            "ls": (dir) => listar(dir),
+            "cd": (directorio) => cdFuncionamiento(directorio),
+            "dir": (dir) => listar(dir),
+        }
+        let comanls = "";
+        if (tokens[0] == "ls" || tokens[0] == "dir") {
+            comanls = "todos";
+        }
+        const resultSemantico = comando[tokens[0]](numberTokens > 1 ? tokens[1] : comanls);
         return { "result": resultSemantico.number, "token": resultSemantico.text };
 
     }
-    function listar(dir) {
-        return { "number": 1, "text": "" }
+
+    function listar(dir = "todos") {
+        if (dir === "todos") {
+            // Unir todos los nombres de directorios separados por salto de línea
+            const contenido = directorios.join('\n');
+            return { "number": 1, "text": contenido };
+        } else {
+            // Buscar si existe el directorio solicitado
+            if (directorios.includes(dir)) {
+                return { "number": 1, "text": dir };
+            } else {
+                return { "number": -1, "text": `El directorio '${dir}' no existe.` };
+            }
+        }
     }
-    function help(coman=""){
-        return { "number": 3, "text": "" }
+    function help(coman = "") {
+        let textoAyuda = "";
+        if (coman === "") {
+            for (const comando in significado) {
+                const ayuda = significado[comando];
+                textoAyuda += `> ${comando}\n`;
+
+                if (Array.isArray(ayuda)) {
+                    textoAyuda += ayuda.map(linea => `  ${linea}`).join('\n') + '\n\n';
+                } else {
+                    textoAyuda += `  ${ayuda}\n\n`;
+                }
+            }
+        } else {
+            if (!significado.hasOwnProperty(coman)) {
+                return { number: -1, text: `No hay información de ayuda para '${coman}'` };
+            }
+            const ayuda = significado[coman];
+            textoAyuda += `> ${coman}\n`;
+
+            if (Array.isArray(ayuda)) {
+                textoAyuda += ayuda.map(linea => `  ${linea}`).join('\n');
+            } else {
+                textoAyuda += `  ${ayuda}`;
+            }
+        }
+        return { "number": 3, "text": textoAyuda };
     }
+
     function cdFuncionamiento(directorio) {
-        crearPrompt(idP)
+        // crearPrompt(idP)
+        //pendiente
         return { "number": 4, "text": "" }
     }
     function insertaNuevoP(idP, token = "") {
@@ -119,7 +178,7 @@ const consoleWeb = (() => {
         sel.removeAllRanges();
         sel.addRange(range);
     }
-    function crearPrompt(idP, event = "", cd = "# ") {
+    function crearPrompt(idP, event = "", cd = "~") {
         let idInsertp = "";
         var elementoExistente = "";
         let lugar = "afterend";
@@ -138,16 +197,16 @@ const consoleWeb = (() => {
         const nuevoP = document.createElement('p');
         nuevoP.className = "prompt";
         nuevoP.id = idInsertp;
-        nuevoP.textContent = 'root@Antonio_Segura:~' + cd;
+        nuevoP.textContent = 'root@Antonio_Segura:' + cd + "# ";
         elementoExistente.insertAdjacentElement(lugar, nuevoP);
         moveCursor(idInsertp);
         return idInsertp;
     }
     function mostrarSalida(idPrompCreado, token) {
         const userPrompt = document.getElementById(idPrompCreado);
-        const spanError = document.createElement('span');
-        spanError.textContent = token;
-        userPrompt.insertAdjacentElement('beforebegin', spanError);
+        const span = document.createElement('span');
+        span.textContent = token;
+        userPrompt.insertAdjacentElement('beforebegin', span);
     }
     function limpiaPantalla(event) {
         event.target.innerHTML = '';
