@@ -1,13 +1,13 @@
 {
   "rutasPermitidas": {
-    "inicio": "'./pages/inicio.html",
-    "header": "'./pages/header.html",
-    "consola": "'./pages/consola.html",
-    "contacto": "'./pages/contacto.html",
-    "proyectos": "'./pages/proyectos.html",
-    "habilidades": "./pages/habilidades.html",
-    "sobre_mi": "'./pages/sobre_mi.html",
-    "experiencia": "'./pages/experiencia.html"
+    "inicio": "pages/inicio.html",
+    "header": "pages/header.html",
+    "consola": "pages/consola.html",
+    "contacto": "pages/contacto.html",
+    "proyectos": "pages/proyectos.html",
+    "habilidades": "pages/habilidades.html",
+    "sobre_mi": "pages/sobre_mi.html",
+    "experiencia": "pages/experiencia.html"
   },
   "idDOMPermitidos": ["inicio", "section", "footer", "muestra_consola"]
 }

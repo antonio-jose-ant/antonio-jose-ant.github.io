@@ -11,21 +11,20 @@ Aunque el portafolio funciona como una página web normal para una navegación t
 Comandos Disponibles:
 Aquí te presento los comandos básicos que puedes utilizar en la consola:
 
-ls: Lista las opciones del menú (excluyendo "Inicio") y un apartado de "Tecnologías".
+ls: Lista las opciones del menú (excluyendo "Inicio").
 
 cd : Cambia a la sección especificada y muestra su contenido dentro de la consola. Puedes usarlo con las siguientes secciones:
 
  -cd contacto: Muestra mi información de contacto.
- -cd sobre mí: 
+ -cd sobre mí: Recarga a la pagina sobre mi 
  -cd proyectos: Muestra una lista de mis proyectos.
  -cd habilidades: Muestra mis habilidades laborales.
  -cd  experiencia: Muestra mi experiencia laboral.
- -cd tecnologias: Muestra las tecnologías que uso en mi día a día.
  -cls: clear: Limpia la pantalla de la consola.
  -clear: Limpia la pantalla de la consola
 
 cls / clear: Limpia la pantalla de la consola.
 
-dir: Lista las opciones del menú (excluyendo "Inicio") y un apartado de "Tecnologías".
+dir: Lista las opciones del menú (excluyendo "Inicio").
 
 ¡Anímate a probarla y explora mi portafolio de una manera diferente!

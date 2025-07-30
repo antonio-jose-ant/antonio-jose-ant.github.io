@@ -223,7 +223,7 @@ a {
 .consola div.consola_content {
   background-color: var(--tertiary);
   width: 100%;
-  height: calc(100% - 50px);
+  min-height: calc(100% - 50px);
   padding: 8px;
   box-sizing: border-box;
   border: none;

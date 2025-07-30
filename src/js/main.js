@@ -1,3 +1,4 @@
+import { creaConst } from './obtenerDataJson/obtenerDataJson.js';
 import { agregarEventosInput } from './compiler/webCompiler.js';
 import { CargaModuloHTML} from './utils/reloadApi.js';
 import { menu } from './components/menu.js';
