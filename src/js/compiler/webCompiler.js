@@ -1,29 +1,44 @@
 import { creaConst } from '../obtenerDataJson/obtenerDataJson.js';
 export function agregarEventosInput(inputArea) {
+    inputArea.addEventListener('scroll', function (e) {
+        console.log(e);
+    })
+    const hitoricheck = {
+        "ArrowUp": "up",
+        "ArrowDown": "down",
+    };
     if (inputArea._listenerAgregado) return;
     inputArea._listenerAgregado = true; // bandera
     inputArea.addEventListener('keydown', function (event) {
+        if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+            let pConsole = contentConsole(event);
+            consoleWeb.comans(hitoricheck[event.key], pConsole[1]);
+        }
         if (event.key === 'Enter') {
-            event.preventDefault();
-            const consolaContent = inputArea.querySelectorAll('p');
-            const lastP = consolaContent[consolaContent.length - 1];
-            const lastPId = lastP.id;
-            const lastPText = lastP.innerText.trim();
-            if (lastPText) {
-                const cleanedText = lastPText.replace(/^root@Antonio_Segura:~#\s*/, '');
+            let pConsole = contentConsole(event);
+            if (pConsole[2]) {
+                const cleanedText = pConsole[2].replace(/^root@Antonio_Segura:~#\s*/, '');
                 if (cleanedText != "") {
                     consoleWeb.lexico(cleanedText)
                         .then(reponse => {
                             if (reponse.result === 2) { consoleWeb.limpiaPantalla(event); return; }
-                            consoleWeb.insertaNuevoP(lastPId, reponse.token)
+                            consoleWeb.insertaNuevoP(pConsole[1], reponse.token)
                         });
 
                 } else {
-                    consoleWeb.insertaNuevoP(lastPId)
+                    consoleWeb.insertaNuevoP(pConsole[1])
                 }
             }
         }
     });
+    function contentConsole(event) {
+        event.preventDefault();
+        const consolaContent = inputArea.querySelectorAll('p');
+        const lastP = consolaContent[consolaContent.length - 1];
+        const lastPId = lastP.id;
+        const lastPText = lastP.innerText.trim();
+        return { 1: lastPId, 2: lastPText };
+    }
 }
 const consoleWeb = (() => {
     let tokens = [];
@@ -33,7 +48,8 @@ const consoleWeb = (() => {
     let cargando = false;
     let esperando = [];
     let significado = {}
-
+    const historyComands = [];
+    let historyIndex = -1;
     async function cargarDatos() {
         if (datosCargados) return;
         if (cargando) {
@@ -56,6 +72,8 @@ const consoleWeb = (() => {
         await cargarDatos();  // solo espera si aún no están cargados
         const tokensrecibidos = text.trim().split(/\s+/);
         const tokensLimpios = [];
+        historyComands.push(text);
+        historyIndex = historyComands.length;
         for (let i = 0; i < tokensrecibidos.length; i++) {
             const tokenLimpio = tokensrecibidos[i].replace(/^\.(\/|\\)/, '');
             tokensLimpios.push(tokenLimpio);
@@ -114,6 +132,23 @@ const consoleWeb = (() => {
 
     }
 
+    function comans(arrow, idp = "comand-0") {
+        let resta = { "up": -1, "down": 1 }[arrow];
+        historyIndex += resta;
+        if (historyIndex < 0) {
+            historyIndex = 0;
+        } else if (historyIndex >= historyComands.length) {
+            historyIndex = historyComands.length;
+            return "";
+        }
+        insertComandHitory(idp, historyComands[historyIndex]);
+    }
+    function insertComandHitory(idp, text) {
+        const userPrompt = document.getElementById(idp);
+        if (!userPrompt) return;
+        userPrompt.textContent = 'root@Antonio_Segura:~# ' + text;
+        moveCursor(idp);
+    }
     function listar(dir = "todos") {
         if (dir === "todos") {
             // Unir todos los nombres de directorios separados por salto de línea
@@ -169,15 +204,38 @@ const consoleWeb = (() => {
         }
         return;
     }
+
     function moveCursor(idP) {
         const userPrompt = document.getElementById(idP);
+        if (!userPrompt) return;
+
+        if (userPrompt.focus) userPrompt.focus();
+
         const range = document.createRange();
         const sel = window.getSelection();
         range.selectNodeContents(userPrompt);
         range.collapse(false);
         sel.removeAllRanges();
         sel.addRange(range);
+
+        const scrollContainer = userPrompt.closest('.consola_content');
+        if (!scrollContainer) return;
+        console.log(scrollContainer.scrollHeight);
+
+        const promptRect = userPrompt.getBoundingClientRect();
+        const containerRect = scrollContainer.getBoundingClientRect();
+        console.log(promptRect, containerRect);
+
+        if (
+            promptRect.bottom > containerRect.bottom ||
+            promptRect.top < containerRect.top
+        ) {
+            // Scroll manual dentro del contenedor
+            scrollContainer.scrollTop = userPrompt.offsetTop - scrollContainer.offsetTop;
+        }
     }
+
+
     function crearPrompt(idP, event = "", cd = "~") {
         let idInsertp = "";
         var elementoExistente = "";
@@ -213,7 +271,7 @@ const consoleWeb = (() => {
         crearPrompt("", event);
     }
     return {
-        lexico, insertaNuevoP, limpiaPantalla
+        lexico, insertaNuevoP, limpiaPantalla, comans
     }
 })();
 window.agregarEventosInput = agregarEventosInput;
