@@ -187,12 +187,12 @@ a {
 /* clases consola */
 .consola {
   width: 90%;
-  height: 90%;
+  height: 80vh;
   flex-direction: column;
   border: solid 1px var(--background);
   box-shadow: -3px 3px 12px 2px var(--black);
   background-color: var(--black);
-  overflow: auto;
+  overflow: hidden;
 }
 
 .consola div.consola_title {
@@ -223,7 +223,8 @@ a {
 .consola div.consola_content {
   background-color: var(--tertiary);
   width: 100%;
-  min-height: calc(100% - 50px);
+  height: calc(100% - 50px);
+  overflow: auto;
   padding: 8px;
   box-sizing: border-box;
   border: none;
