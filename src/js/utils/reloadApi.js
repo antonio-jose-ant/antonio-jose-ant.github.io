@@ -24,18 +24,17 @@ import { creaConst } from '../obtenerDataJson/obtenerDataJson.js';
  */
 export const CargaModuloHTML = (() => {
     /**
- * Carga un archivo HTML asociado a un módulo y lo inserta dentro de un contenedor válido del DOM.
- *
- * @function cargaModulo
- * @memberof CargaModuloHTML
- * @param {string} modulo - Nombre del módulo a cargar (clave existente en `rutasPermitidas`).
- * @param {string} [idperm='section'] - ID del contenedor DOM donde se inyectará el contenido (debe estar en `idDOMPermitidos`).
- * @returns {void}
- *
- * @fires CustomEvent#moduloCargado
- * @throws {Error} - Si ocurre un problema durante la carga con fetch.
- */
-
+     * Carga un archivo HTML asociado a un módulo y lo inserta dentro de un contenedor válido del DOM.
+     *
+     * @function cargaModulo
+     * @memberof CargaModuloHTML
+     * @param {string} modulo - Nombre del módulo a cargar (clave existente en `rutasPermitidas`).
+     * @param {string} [idperm='section'] - ID del contenedor DOM donde se inyectará el contenido (debe estar en `idDOMPermitidos`).
+     * @returns {void}
+     *
+     * @fires CustomEvent#moduloCargado
+     * @throws {Error} - Si ocurre un problema durante la carga con fetch.
+     */
     function cargaModulo(modulo, idperm = 'section') {
         creaConst.obtenerDataJson('allowed_pages')
             .then(requerimientos => {
@@ -84,6 +83,10 @@ export const CargaModuloHTML = (() => {
         cargaModulo
     }
 })();
+/**
+ * cargaConsola es una función que carga el módulo de consola en un contenedor específico del DOM.
+ * @param {string} idCargaConsole 
+ */
 export function cargaConsola(idCargaConsole = 'muestra_consola') {
     CargaModuloHTML.cargaModulo('consola', idCargaConsole);
     const container = document.getElementById(idCargaConsole);

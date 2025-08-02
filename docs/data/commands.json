@@ -7,12 +7,12 @@
         "cd sobre mí: ",
         "cd proyectos: Muestra una lista de mis proyectos.",
         "cd habilidades: Muestra mis habilidades laborales.",
-        "cd  experiencia: Muestra mi experiencia laboral.",
-        "cd tecnologias: Muestra las tecnologías que uso en mi día a día.",
-        "cls: clear: Limpia la pantalla de la consola.",
-        "clear: Limpia la pantalla de la consola."
+        "cd experiencia: Muestra mi experiencia laboral.",
+        "cd tecnologias: Muestra las tecnologías que uso en mi día a día."
       ]
     },
-    "dir": "Lista las opciones del menú (excluyendo 'Inicio') y un apartado de 'Tecnologías'."
+    "dir": "Lista las opciones del menú (excluyendo 'Inicio') y un apartado de 'Tecnologías'.",
+    "cls": "Limpia la pantalla de la consola.",
+    "clear": "Limpia la pantalla de la consola."
   }
 }
