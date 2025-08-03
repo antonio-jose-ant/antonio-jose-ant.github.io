@@ -1,4 +1,6 @@
 import { creaConst } from '../obtenerDataJson/obtenerDataJson.js';
+import { CargaModuloHTML } from '../utils/reloadApi.js';
+
 /**
  * @function agregarEventosInput
  * esta función agrega eventos de teclado al área de entrada de la consola.
