@@ -6,6 +6,7 @@
   --quaternary: #772953;
   --quinary: #77216F;
   --white: #FFFFFF;
+  --white-50: rgba(255, 255, 255, 0.5);
   --gray: #AEA79F;
   --black: #000000;
   --background: #1b1b1b;
@@ -29,7 +30,13 @@
   /* 🔣 Otros */
   --icon-size: 1.5em;
   --font-fixed: 16px;
-  --padd: 20px;
+  --padd-xs: 875rem;
+  --padd: 1rem;
+  --padd-sm: 1.5rem;
+  --padd-xl: 2rem;
+  --padd-xxl: 2.5rem;
+  --border-radius: 20px;
+  --border-radius-sm: 5px;
 }
 
 body,
@@ -38,6 +45,7 @@ html {
   padding: 0;
   font-family: Arial, sans-serif;
   background-color: var(--background);
+  overflow: hidden;
 }
 
 .flex {
@@ -57,7 +65,8 @@ a {
   text-decoration: none;
   color: var(--primary);
 }
-.img-fluid{
+
+.img-fluid {
   width: 100%;
   height: auto;
   border: none;
@@ -260,6 +269,63 @@ a {
   min-height: 60px;
 }
 
+/*** sobre mi ***/
+.sobre_mi {
+  width: 100%;
+  height: calc(100vh - 50px);
+}
+
+.sobre_mi__img {
+  width: 40%;
+  height: calc(100vh - 50px);
+  flex-direction: column;
+  margin: auto var(--padd-xl);
+  position: relative;
+}
+
+.sobre_mi__foto img {
+  border-radius: var(--border-radius);
+  box-shadow: -3px 3px 20px 2px var(--black);
+}
+
+.sobre_mi__foto {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.sobre_mi__foto:after {
+  content: 'Desarrollador web full stack \A ingeniero en sistemas computacionales';
+  white-space: pre-line;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--white-50);
+  font-size: var(--font-xl);
+  background-color: var(--secondary);
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--border-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: imageMuestra 1s ease-in-out;
+  -webkit-animation: imageMuestra 1s ease-in-out;
+}
+
+.sobre_mi__info {
+  width: 60%;
+  height: calc(100vh - 50px);
+}
+
+/*** sobre mi fin***/
+
 /***animaciones class***/
 .fadeInUp {
   animation: fadeInUp .8s ease-in-out;
@@ -277,6 +343,19 @@ a {
 }
 
 /***animaciones***/
+@keyframes imageMuestra {
+  from {
+    opacity: .5;
+    top: 25%;
+    left: 50%;
+  }
+
+  to {
+    opacity: 1;
+    top: 50%;
+  }
+
+}
 
 @keyframes fadeInUp {
   from {
@@ -306,7 +385,7 @@ a {
     -moz-transform: translateY(0);
     -ms-transform: translateY(0);
     -o-transform: translateY(0);
-}
+  }
 
   to {
     opacity: 0;
@@ -315,7 +394,7 @@ a {
     -moz-transform: translateY(-20px);
     -ms-transform: translateY(-20px);
     -o-transform: translateY(-20px);
-}
+  }
 }
 
 @keyframes fadeInDown {
