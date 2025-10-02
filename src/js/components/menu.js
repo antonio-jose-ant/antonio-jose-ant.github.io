@@ -69,6 +69,7 @@ export const menu = (() => {
                 }
                 cierraMenuflotante();
             }
+
         }
         catch (e) {
             alert(e)

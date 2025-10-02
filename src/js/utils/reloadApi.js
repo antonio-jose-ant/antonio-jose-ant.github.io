@@ -1,4 +1,5 @@
 import { creaConst } from '../obtenerDataJson/obtenerDataJson.js';
+import { CSSandJSCargador } from '../cargadorJSandCSS/cagadorJS_Css.js';
 /**
  * CargaModuloHTML es un objeto singleton que administra la carga dinámica de fragmentos HTML
  * dentro de elementos específicos del DOM. Su propósito es modularizar el contenido del sitio 
@@ -35,6 +36,18 @@ export const CargaModuloHTML = (() => {
      * @fires CustomEvent#moduloCargado
      * @throws {Error} - Si ocurre un problema durante la carga con fetch.
      */
+
+    const functionsModulos = {
+        'inicio': () => { cargaConsola() },
+        'header': () => { },
+        'consola': () => {},
+        'contacto': () => { },
+        'proyectos': () => { },
+        'habilidades': () => { },
+        'sobre_mi': () => { CSSandJSCargador.cargar('sobre_mi.css'); },
+        'experiencia': () => { },
+    }
+
     function cargaModulo(modulo, idperm = 'section') {
         creaConst.obtenerDataJson('allowed_pages')
             .then(requerimientos => {
@@ -63,16 +76,7 @@ export const CargaModuloHTML = (() => {
                 container.innerHTML = htmlString;
                 const event = new CustomEvent('moduloCargado', { detail: { modulo, idperm } });
                 container.dispatchEvent(event);
-                if (modulo === 'inicio') {
-                    const iamElement = document.getElementById('I_AM');
-                    if (iamElement) {
-                        if (window.innerWidth >= 900) {
-                            iamElement.style.height = `${window.innerHeight - 54}px`;
-                        }
-                        cargaConsola()
-                    }
-                }
-
+                functionsModulos[modulo]();
             })
             .catch(error => {
                 console.error('Error al cargar el módulo:', error);
@@ -87,7 +91,13 @@ export const CargaModuloHTML = (() => {
  * cargaConsola es una función que carga el módulo de consola en un contenedor específico del DOM.
  * @param {string} idCargaConsole 
  */
-export function cargaConsola(idCargaConsole = 'muestra_consola') {
+function cargaConsola(idCargaConsole = 'muestra_consola') {
+    const iamElement = document.getElementById('I_AM');
+    if (iamElement) {
+        if (window.innerWidth >= 900) {
+            iamElement.style.height = `${window.innerHeight - 54}px`;
+        }
+    }
     CargaModuloHTML.cargaModulo('consola', idCargaConsole);
     const container = document.getElementById(idCargaConsole);
     container.addEventListener('moduloCargado', function (e) {

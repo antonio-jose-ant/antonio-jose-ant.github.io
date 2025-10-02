@@ -1,0 +1,89 @@
+/*** sobre mi ***/
+.sobre_mi {
+  width: 100%;
+  height: calc(100vh - 50px);
+}
+
+.sobre_mi__img {
+  width: 40%;
+  height: calc(100vh - 50px);
+  flex-direction: column;
+  margin: auto var(--padd-xl);
+  position: relative;
+}
+
+.sobre_mi__foto img {
+  border-radius: var(--border-radius);
+  box-shadow: -3px 3px 20px 2px var(--black);
+}
+
+.sobre_mi__foto {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.sobre_mi__foto::after {
+  animation: imageMuestraRegreso .5s ease-in-out;
+  -webkit-animation: imageMuestraRegreso .5s ease-in-out;
+}
+
+.sobre_mi__foto:hover::after {
+  content: 'Desarrollador web full stack \A ingeniero en sistemas computacionales';
+  white-space: pre-line;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--white-50);
+  font-size: var(--font-xl);
+  background-color: var(--secondary);
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--border-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: imageMuestra .5s ease-in-out;
+  -webkit-animation: imageMuestra .5s ease-in-out;
+}
+
+.sobre_mi__info {
+  width: 60%;
+  height: calc(100vh - 50px);
+}
+
+/***animaciones***/
+@keyframes imageMuestra {
+  from {
+    opacity: .5;
+    top: 25%;
+    left: 50%;
+  }
+
+  to {
+    opacity: 1;
+    top: 50%;
+  }
+
+}
+@keyframes imageMuestraRegreso {
+  from {
+    opacity: 1;
+    top: -50%;
+  }
+
+  to {
+    opacity: .5;
+    left: -50%;
+    top: -25%;
+  }
+
+}
+
+/*** sobre mi fin***/
