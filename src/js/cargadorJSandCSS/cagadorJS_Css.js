@@ -52,7 +52,7 @@ export const CSSandJSCargador = (() => {
                         resolve();
                     };
                     nuevoLink.onerror = reject;
-                    document.head.appendChild(nuevoLink);
+                    document.head.insertBefore(nuevoLink, document.head.firstChild);
                 } else {
                     console.log("Tipo de archivo no soportado.");
                     reject(new Error("Tipo de archivo no soportado."));
