@@ -2,16 +2,6 @@ import { creaConst } from '../obtenerDataJson/obtenerDataJson.js';
 // import { CargaModuloHTML } from '../utils/reloadApi.js';
 
 /**
- * @function agregarEventosInput
- * esta función agrega eventos de teclado al área de entrada de la consola.
- * Permite navegar por el historial de comandos con las flechas arriba y abajo,
- * y enviar comandos con la tecla Enter.
- * @param {HTMLElement} inputArea - El área de entrada donde se agregarán los eventos
- * @returns 
- */
-
-
-/**
  * consoleWeb es un módulo basado en IIFE que simula una interfaz de línea de comandos web.
  * Gestiona el análisis léxico, sintáctico y semántico de los comandos del usuario, el historial de comandos,
  * y la interacción con el DOM para mostrar prompts y resultados.
