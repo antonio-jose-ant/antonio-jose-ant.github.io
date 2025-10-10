@@ -118,11 +118,11 @@
 @media (max-width: 1200px) {
 
   .I_AM>div.I_AM__text h1 {
-    font-size: var(--font-xxl);
+    font-size: var(--font-xxl) !important;
   }
 
   .I_AM>div.I_AM__text::before {
-    font-size: var(--font-xxl);
+    font-size: var(--font-xxl) !important;
   }
 
 
@@ -130,8 +130,7 @@
 
 @media (max-width: 980px) {
   .I_AM {
-    flex-direction: column;
-    height: auto !important;
+    grid-template:1fr 2fr /100% !important;
   }
 
   .sobre_mi {
@@ -157,11 +156,11 @@
   }
 
   .I_AM>div.I_AM__text h1 {
-    font-size: var(--font-lg);
+    font-size: var(--font-lg) !important;
   }
 
   .I_AM>div.I_AM__text::before {
-    font-size: var(--font-lg);
+    font-size: var(--font-lg) !important;
   }
 
   .muestra_consola {
