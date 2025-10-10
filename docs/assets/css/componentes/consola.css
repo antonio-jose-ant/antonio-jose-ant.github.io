@@ -1,0 +1,68 @@
+.consola {
+  width: 90%;
+  height: 80vh;
+  flex-direction: column;
+  border: solid 1px var(--background);
+  box-shadow: -3px 3px 12px 2px var(--black);
+  background-color: var(--black);
+  overflow: hidden;
+}
+
+.consola div.consola_title {
+  width: 100%;
+  height: 50px;
+  color: var(--white);
+  justify-content: start;
+  align-items: center;
+}
+
+.consola div.consola_title div {
+  width: auto;
+  height: 50px;
+  margin: 0 0 0 10px;
+  padding: 0 15px;
+  justify-content: center;
+  align-items: center;
+  font-size: var(--font-fixed);
+  background-color: var(--tertiary);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.consola div.consola_title div a {
+  color: var(--white);
+}
+
+.consola div.consola_content {
+  background-color: var(--tertiary);
+  width: 100%;
+  height: calc(100% - 50px);
+  overflow: auto;
+  padding: 8px;
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+  resize: none;
+  color: var(--white);
+  font-family: monospace;
+  flex-direction: column;
+  white-space: pre-wrap;
+  word-break: break-all;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+
+.consola div.consola_content * {
+  color: var(--white);
+  font-size: var(--font-fixed);
+  font-family: monospace;
+  margin: 0;
+  padding: 0;
+  text-align: justify;
+}
+
+.consola div.consola_content p.prompt {
+  width: 100%;
+  min-height: 60px;
+}

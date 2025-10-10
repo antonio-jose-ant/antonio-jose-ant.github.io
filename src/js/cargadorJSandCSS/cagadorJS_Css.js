@@ -2,9 +2,24 @@ export const CSSandJSCargador = (() => {
     const estilosCargados = new Map(); // Guarda ruta de CSS y su <link>
     const archPermitido = [
         'sobre_mi.css',
+        'contacto.css',
+        'experiencia.css',
+        'habilidades.css',
+        'inicio.css',
+        'proyectos.css',
+        'sobre_mi.css',
+        'consola.css',
+        'menu.css',
     ];
     const rutaspermitidas = {
-        'sobre_mi.css': './assets/css/sobre_mi.css',
+        'sobre_mi.css': './assets/css/modulos/sobre_mi.css',
+        'contacto.css': './assets/css/modulos/contacto.css',
+        'experiencia.css': './assets/css/modulos/experiencia.css',
+        'habilidades.css': './assets/css/modulos/habilidades.css',
+        'inicio.css': './assets/css/modulos/inicio.css',
+        'proyectos.css': './assets/css/modulos/proyectos.css',
+        'consola.css': './assets/css/componentes/consola.css',
+        'menu.css': './assets/css/componentes/menu.css',
     };
 
     return {

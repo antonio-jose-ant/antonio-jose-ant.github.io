@@ -1,5 +1,6 @@
 import { creaConst } from '../obtenerDataJson/obtenerDataJson.js';
-import { CSSandJSCargador } from '../cargadorJSandCSS/cagadorJS_Css.js';
+import { inicio } from '../modulos/inicio.js';
+import { sobre_mi } from '../modulos/sobre_mi.js';
 /**
  * CargaModuloHTML es un objeto singleton que administra la carga dinámica de fragmentos HTML
  * dentro de elementos específicos del DOM. Su propósito es modularizar el contenido del sitio 
@@ -38,14 +39,13 @@ export const CargaModuloHTML = (() => {
      */
 
     const functionsModulos = {
-        'inicio': () => { cargaConsola() },
-        'header': () => { },
-        'consola': () => {},
-        'contacto': () => { },
-        'proyectos': () => { },
-        'habilidades': () => { },
-        'sobre_mi': () => { CSSandJSCargador.cargar('sobre_mi.css'); },
-        'experiencia': () => { },
+        'inicio': () => { inicio.init() },
+        'consola': () => { },
+        'contacto': () => { contacto.init() },
+        'proyectos': () => { proyectos.init() },
+        'habilidades': () => { habilidades.init() },
+        'sobre_mi': () => { sobre_mi.init() },
+        'experiencia': () => { experiencia.init() },
     }
 
     function cargaModulo(modulo, idperm = 'section') {
@@ -91,19 +91,5 @@ export const CargaModuloHTML = (() => {
  * cargaConsola es una función que carga el módulo de consola en un contenedor específico del DOM.
  * @param {string} idCargaConsole 
  */
-function cargaConsola(idCargaConsole = 'muestra_consola') {
-    const iamElement = document.getElementById('I_AM');
-    if (iamElement) {
-        if (window.innerWidth >= 900) {
-            iamElement.style.height = `${window.innerHeight - 54}px`;
-        }
-    }
-    CargaModuloHTML.cargaModulo('consola', idCargaConsole);
-    const container = document.getElementById(idCargaConsole);
-    container.addEventListener('moduloCargado', function (e) {
-        if (e.detail.modulo === 'consola') {
-            const consolaContent = container.querySelector('.consola_content');
-            if (!consolaContent) { console.log("consola no cargada "); return; }
-        }
-    }, { once: true });
-}
+
+
