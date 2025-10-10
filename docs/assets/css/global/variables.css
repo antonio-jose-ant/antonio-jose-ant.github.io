@@ -1,0 +1,43 @@
+:root {
+  /* 🎨 Paleta de colores */
+  --primary: #E95420;
+  --secondary: #5E2750;
+  --tertiary: #2C001E;
+  --quaternary: #772953;
+  --quinary: #77216F;
+  --white: #FFFFFF;
+  --white-50: rgba(255, 255, 255, 0.5);
+  --gray: #AEA79F;
+  --black: #000000;
+  --background: #1b1b1b;
+
+  /* 🔠 Tipografía (basado en rem para escalabilidad) */
+  --font-xs: 0.75rem;
+  /* 12px */
+  --font-sm: 0.875rem;
+  /* 14px */
+  --font-md: 1rem;
+  /* 16px (base) */
+  --font-lg: 1.25rem;
+  /* 20px */
+  --font-xl: 1.5rem;
+  /* 24px */
+  --font-xxl: 2rem;
+  /* 32px */
+  --font-xxxl: 2.5rem;
+  --font-zl: 3rem;
+  --font-zxl: 3.5rem;
+  /* 32px */
+
+  /* 🔣 Otros */
+  --icon-size: 1.5em;
+  --font-fixed: 16px;
+  --padd-xs: 875rem;
+  --padd: 1rem;
+  --padd-sm: 1.5rem;
+  --padd-xl: 2rem;
+  --padd-xxl: 2.5rem;
+  --border-radius: 20px;
+  --border-radius-sm: 5px;
+  --border: 10px;
+}

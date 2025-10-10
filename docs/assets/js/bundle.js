@@ -1,3 +1,5 @@
+// import { creaConst } from '../../../src/js/obtenerDataJson/obtenerDataJson.js';
+import { agregarEventosInput } from '../../../src/js/compiler/agregarEventosInput.js';
 import { CargaModuloHTML } from '../../../src/js/utils/reloadApi.js';
 import { menu } from '../../../src/js/components/menu.js';
 document.addEventListener('DOMContentLoaded', () => {
@@ -5,11 +7,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const header = document.getElementById('header');
     header.addEventListener('click', menu.menuActivo);
     const section = document.getElementById('section'); // este ya existe
-    section.addEventListener('click', (e) => {
-        if (e.target.matches('.btn-dinamico')) {
-            console.log('Click en botón dinámico:', e.target);
-            // aquí haces lo que necesites
+    section.addEventListener('keydown', (e) => {
+        if (e.target.matches('.consola_content')) {
+            agregarEventosInput(e.target);
         }
     });
 });
+
+
 

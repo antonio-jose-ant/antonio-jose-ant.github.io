@@ -1,0 +1,62 @@
+.I_AM {
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  grid-template: 100% / 1fr 2fr;
+}
+
+.I_AM>div {
+  width: 100%;
+  text-align: center;
+  padding: var(--padd);
+  box-sizing: border-box;
+  height: 100%;
+}
+
+.I_AM>div.I_AM__text {
+  padding: var(--padd);
+  box-sizing: border-box;
+  color: var(--primary);
+  font-size: var(--font-xxl);
+  font-weight: bold;
+  position: relative;
+}
+
+.I_AM>div.I_AM__text::before {
+  content: 'root@Antonio_Segura:~# ';
+  position: absolute;
+  left: 0;
+  font-size: var(--font-xxxl);
+  top: 50%;
+  -webkit-transform: translate(20px, -50%);
+  transform: translate(20px, -50%);
+  -webkit-transform: translate(20px, -50%);
+  -moz-transform: translate(20px, -50%);
+  -ms-transform: translate(20px, -50%);
+  -o-transform: translate(20px, -50%);
+}
+
+.I_AM>div.I_AM__text h1 {
+  margin: 0;
+  position: relative;
+  top: calc(50% + 25px);
+  left: 0;
+  font-size: var(--font-xxxl);
+  white-space: nowrap;
+  overflow: hidden;
+  /* width: 100%; */
+  border-right: 2px solid var(--primary);
+  /* animation: typing 3s steps(20, end) 1 forwards, blink 1s step-start infinite;
+  -webkit-animation: typing 3s steps(20, end) 1 forwards, blink 1s step-start infinite; */
+  /* inicial */
+}
+
+
+.I_AM>div.I_AM__text h1::after {
+  content: '|';
+  position: absolute;
+  animation: promot 1s steps(1) infinite;
+  -webkit-animation: promot 1s steps(1) infinite;
+  right: -14px;
+  top: -3px;
+}
