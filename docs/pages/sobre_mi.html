@@ -1,4 +1,4 @@
-<div class="sobre_mi flex">
+<div class="sobre_mi grid" id="sobre_mi">
     <div class="sobre_mi__img flex">
         <picture class="sobre_mi__foto">
             <source srcset="./assets/img/foto.jpg" class="img-fluid" />
@@ -10,49 +10,46 @@
         </div>
     </div>
     <div class="sobre_mi__info flex">
-        <div id="textoSobreMi" class="texto_Sobre_Mi">
+        <div id="textoSobreMi" class="texto_Sobre_Mi" dev-antonio-section="sobre_mi__info">
             <h1>Sobre mí</h1>
             <h2>Desarrollador web full stack</h2>
             <h3>ingeniero en sistemas computacionales</h3>
-            <p>Soy un <strong>desarrollador web full stack semi senior</strong>, apasionado por la tecnología y en
-                constante evolución hacia un perfil senior. Me caracterizo por mi resiliencia para finalizar proyectos y
-                mi enfoque en crear soluciones reutilizables, eficientes y de calidad.</p>
+            <div class=" flex flex-D-column">
+                <div class="card__Info">
+                    <pre class="code">function <span>sobre_mi</span> <span class="llave">() {</span></pre><br>
+                    <p class="indentación1">Soy un <strong>desarrollador web full stack semi senior</strong>, apasionado
+                        por la
+                        tecnología y en
+                        constante evolución hacia un perfil senior. Me caracterizo por mi resiliencia para finalizar
+                        proyectos y
+                        mi enfoque en crear soluciones reutilizables, eficientes y de calidad.</p><br>
+                    <span class="llave">}</span>
+                </div>
+                <div class="card__Info">
+                    <pre class="code">function <span>tecnologias</span> <span class="llave">() {</span></pre><br>
+                    <p class="indentación1">Domino tecnologías como:</p>
+                    <pre
+                        class="code indentación1">const <span>mapTecnologias</span> <span class="llave">= {</span></pre>
+                    <br>
+                    <ul>
+                        <li>JavaScript: (módulos, promesas, DOM, programación funcional).</li>
+                        <li>CSS: (grids, animaciones, flex, variables, programación funcional).</li>
+                        <li>PHP: 8 (POO, namespaces, modularidad).</li>
+                        <li>HTML5:.</li>
+                        <li>Bootstrap:.</li>
+                        <li>jQuery:.</li>
+                        <li>Vite:.</li>
+                        <li>BD: Bases de datos relacionales (MySQL).</li>
+                    </ul>
+                    <span class="llave indentación1">}</span><br>
+                    <span class="llave">}</span>
 
-            <p>Domino tecnologías como:</p>
-            <ul>
-                <li>JavaScript (módulos, promesas, DOM, programación funcional)</li>
-                <li>CSS (grids, animaciones, flex, variables, programación funcional)</li>
-                <li>PHP 8 (POO, namespaces, modularidad)</li>
-                <li>HTML5</li>
-                <li>Bootstrap</li>
-                <li>jQuery</li>
-                <li>Vite</li>
-                <li>Bases de datos relacionales (MySQL)</li>
-            </ul>
-
-            <p>Actualmente estoy aprendiendo <strong>Laravel con Vue</strong> y reforzando mis conocimientos en
-                servidores.
-            </p>
-
-            <p>Disfruto de <strong>optimizar y refactorizar código</strong>, así como de diseñar capas de
-                personalización de
-                frameworks. Un ejemplo fue mi participación en la actualización de un ERP donde modularicé código JS,
-                implementé cargadores dinámicos de CSS y diseñé archivos genéricos para formularios y catálogos,
-                mejorando
-                la mantenibilidad.</p>
-
-            <p>Me motiva enfrentar problemas complejos, dividirlos en pasos alcanzables y encontrar soluciones
-                escalables.
-                Nunca dejo de aprender y busco siempre mejorar mis implementaciones.</p>
-
-            <p>Fuera del código me inspiran la música, la naturaleza y la física, intereses que complementan mi forma de
-                trabajar.</p>
-
-            <p>Mi objetivo es crecer en áreas como <strong>ciberseguridad y administración de servidores</strong>,
-                aportando
-                valor en proyectos donde la innovación y la eficiencia sean clave.</p>
+                </div>
+                <div class="card__Info">
+                </div>
+                <div class="card__Info">
+                </div>
+            </div>
         </div>
     </div>
 </div>
-<footer class="sobre_mi__footer">
-</footer>

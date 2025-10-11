@@ -1,9 +1,13 @@
 import { CSSandJSCargador } from '../cargadorJSandCSS/cagadorJS_Css.js';
-import { cargaConsola } from './consola.js';
 export const contacto = {
     init() {
+        const iamElement = document.getElementById('contacto');
+        if (iamElement) {
+            if (window.innerWidth >= 900) {
+                iamElement.style.height = `${window.innerHeight - 54}px`;
+            }
+        }
         CSSandJSCargador.cargar('inicio.css');
-        cargaConsola();
         tamañoelement();
     }
 };

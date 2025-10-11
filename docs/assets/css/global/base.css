@@ -13,6 +13,12 @@ html {
   align-items: center;
 }
 
+.flex-D-column{
+  flex-direction: column;
+}
+.flex-D-row{
+  flex-direction: row;
+}
 .grid {
   display: grid;
   justify-content: center;
@@ -40,4 +46,20 @@ a {
   width: 100%;
   height: auto;
   overflow: auto;
+}
+
+.code {
+  font-size: 1rem;
+  color: #3d614c;
+  font-family: 'Fira Code', monospace;
+}
+
+.code span {
+  color: #3a6896;
+  font-family: 'Fira Code', monospace;
+}
+span.llave {
+  font-size: 1rem;
+  color: #716d34;
+  font-family: 'Fira Code', monospace;
 }
