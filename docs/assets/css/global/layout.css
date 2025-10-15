@@ -36,14 +36,14 @@
 
 @keyframes imgt {
   0% {
-    opacity: 0.3;
+    opacity: 0.1;
     zoom: 2;
-    transform: scale(1.2);
-    -webkit-transform: scale(1.2);
-    -moz-transform: scale(1.2);
-    -ms-transform: scale(1.2);
-    -o-transform: scale(1.2);
-  }
+    transform: scale(1.3);
+    -webkit-transform: scale(1.3);
+    -moz-transform: scale(1.3);
+    -ms-transform: scale(1.3);
+    -o-transform: scale(1.3);
+}
 
   100% {
     opacity: 1;
@@ -162,11 +162,11 @@
 
 @media (max-width: 980px) {
   .I_AM {
-    grid-template: 1fr 2fr /100% !important;
+    grid-template: 20% calc(80% - 70px) /100%;
   }
 
   .sobre_mi {
-    grid-template: 3fr 3fr /calc(100% - 56px);
+    grid-template: 35% calc(65% - 70px)/100%;
   }
 
   .card__Info {
@@ -174,7 +174,7 @@
   }
 
   .sobre_mi__img {
-    height: 40vh !important;
+    height: auto!important;
     width: 85% !important;
 
     margin: 10px 0;
@@ -182,7 +182,7 @@
 
   .sobre_mi__info {
     width: 100% !important;
-    height: calc(50vh - 140px) !important;
+    height: 100%;
     margin: 10px 0;
   }
 
@@ -208,7 +208,7 @@
 
   .consola {
     width: 100%;
-    height: 450px;
+    height: 100%;
   }
 
   .header nav.menu ul.menu-Principal {
