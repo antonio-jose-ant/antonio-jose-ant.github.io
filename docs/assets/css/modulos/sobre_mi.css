@@ -1,3 +1,9 @@
+
+.imgt {
+  animation: imgt 1s ease-in-out;
+  -webkit-animation: imgt 1s ease-in-out;
+}
+
 /*** sobre mi ***/
 .sobre_mi {
   width: 100%;
@@ -12,54 +18,52 @@
   position: relative;
 }
 
-.sobre_mi__foto img {
-  border-radius: var(--border-radius);
-}
-
 .sobre_mi__foto {
-  transform-origin: center center;
-  transition: transform 0.3s ease;
-  position: absolute;
+  position: relative;
   width: 100%;
   height: auto;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1;
   overflow: hidden;
   border-radius: var(--border);
 }
 
-.imgt {
-  animation: imgt 1s ease-in-out;
-  -webkit-animation: imgt 1s ease-in-out;
-}
-
 .sobre_mi__foto::after {
-  animation: imageMuestraRegreso .5s ease-in-out;
-  -webkit-animation: imageMuestraRegreso .5s ease-in-out;
-}
-
-.sobre_mi__foto:hover::after {
-  content: 'Desarrollador web full stack \A ingeniero en sistemas computacionales';
-  white-space: pre-line;
+  content: '';
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: var(--white-50);
-  font-size: var(--font-xl);
-  background-color: var(--secondary);
-  text-align: center;
+  top: 100%; /* empieza oculto abajo */
+  left: 0;
   width: 100%;
   height: 100%;
-  border-radius: var(--border-radius);
+  background-color: var(--secondary);
+  color: var(--white-50);
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: imageMuestra .5s ease-in-out;
-  -webkit-animation: imageMuestra .5s ease-in-out;
+  text-align: center;
+  white-space: pre-line;
+  border-radius: var(--border-radius);
+  font-size: var(--font-xl);
+  opacity: 0;
+  transition: all 0.5s ease-in-out;
 }
+
+/* Al hacer hover */
+.sobre_mi__foto:hover::after {
+  content: 'Desarrollador web full stack \A ingeniero en sistemas computacionales';
+  top: 0; /* sube desde abajo */
+  opacity: 1;
+}
+
+/* Cuando se quita el hover, vuelve a bajar */
+.sobre_mi__foto::after {
+  pointer-events: none; /* evita interferir con el hover */
+}
+
+
+
+.sobre_mi__foto img {
+  border-radius: var(--border-radius);
+}
+
 
 .sobre_mi__info {
   width: 100%;

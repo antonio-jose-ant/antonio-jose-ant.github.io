@@ -85,6 +85,9 @@ export const menu = (() => {
      */
     function mostrarMenuDesplegable(event, originalUl) {
         if (cierraMenuflotante() === "cerrado") return;
+        if (window.innerWidth > 980) {
+            return;
+        }
         const menuCreate = document.createElement('ul');
         menuCreate.className = "menu-flotante fadeInDown";
         const menuItems = originalUl.querySelectorAll('li');

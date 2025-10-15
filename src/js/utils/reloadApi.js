@@ -1,6 +1,10 @@
 import { creaConst } from '../obtenerDataJson/obtenerDataJson.js';
 import { inicio } from '../modulos/inicio.js';
 import { sobre_mi } from '../modulos/sobre_mi.js';
+import { contacto } from '../modulos/contacto.js';
+import { proyectos } from '../modulos/proyectos.js';
+import { habilidades } from '../modulos/habilidades.js';
+import { experiencia } from '../modulos/experiencia.js';
 /**
  * CargaModuloHTML es un objeto singleton que administra la carga dinámica de fragmentos HTML
  * dentro de elementos específicos del DOM. Su propósito es modularizar el contenido del sitio 
